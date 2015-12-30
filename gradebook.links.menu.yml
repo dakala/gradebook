@@ -1,0 +1,13 @@
+gradebook.admin_index:
+  title: Gradebook
+  route_name: gradebook.admin_index
+  parent: system.admin_config
+  description: 'Administer the suite of Gradebook modules.'
+#  position: right
+#  weight: -10
+
+entity.grade_letter_set.collection:
+  title: Grade letters
+  description: 'Add and modify grade letter sets.'
+  route_name: entity.grade_letter_set.collection
+  parent: gradebook.admin_index

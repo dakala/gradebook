@@ -1,0 +1,10 @@
+grade_letter_set_add_local_action:
+  route_name: grade_letter.set_add
+  title: 'Add grade letter set'
+  appears_on:
+    - entity.grade_letter_set.collection
+grade_letter.link_add:
+  route_name: grade_letter.link_add
+  title: 'Add grade letter'
+  appears_on:
+    - entity.grade_letter_set.customize_form

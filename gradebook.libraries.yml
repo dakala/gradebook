@@ -1,0 +1,6 @@
+drupal.gradebook:
+  version: VERSION
+  css:
+    theme:
+      css/gradebook.theme.css: {}
+      css/gradebook.icons.theme.css: {}

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the shortcut module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function gradebook_install() {
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function gradebook_uninstall() {
+ 
+}

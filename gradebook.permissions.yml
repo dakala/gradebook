@@ -1,0 +1,4 @@
+administer gradebook:
+  title: 'Administer grade books'
+access gradebooks:
+  title: 'Use grade books'

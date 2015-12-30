@@ -1,0 +1,19 @@
+#grade_letter.set_switch:
+#  route_name: grade_letter.set_switch
+#  base_route: entity.user.canonical
+#  title: 'Grade letters'
+#
+#entity.grade_letter_set.customize_form:
+#  title: 'List links'
+#  route_name: entity.grade_letter_set.customize_form
+#  base_route: entity.grade_letter_set.customize_form
+#entity.grade_letter_set.edit_form:
+#  title: 'Edit set name'
+#  route_name: entity.grade_letter_set.edit_form
+#  base_route: entity.grade_letter_set.customize_form
+#  weight: 10
+#
+#entity.grade_letter.canonical:
+#  route_name: entity.grade_letter.canonical
+#  base_route: entity.grade_letter.canonical
+#  title: Edit
