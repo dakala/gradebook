@@ -44,29 +44,29 @@ function grade_scale_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
-/**
- * Access callback for editing a shortcut set.
- *
- * @param Drupal\grade_scale\GradeScaleInterface $shortcut_set
- *   (optional) The shortcut set to be edited. If not set, the current user's
- *   shortcut set will be used.
- *
- * @return \Drupal\Core\Access\AccessResultInterface
- *   The access result.
- */
-function grade_scale_set_edit_access(GradeScaleInterface $shortcut_set = NULL) {
-  $account = \Drupal::currentUser();
-
-  // Shortcut administrators can edit any set.
-  if ($account->hasPermission('administer grade scales')) {
-    return AccessResult::allowed()->cachePerPermissions();
-  }
-
-  // Sufficiently-privileged users can edit their currently displayed shortcut
-  // set, but not other sets. They must also be able to access shortcuts.
-  $may_edit_current_shortcut_set = $account->hasPermission('customize grade scales') && (!isset($shortcut_set) || $shortcut_set == grade_scale_current_displayed_set()) && $account->hasPermission('access shortcuts');
-  return AccessResult::allowedIf($may_edit_current_shortcut_set)->cachePerPermissions();
-}
+///**
+// * Access callback for editing a shortcut set.
+// *
+// * @param Drupal\grade_scale\GradeScaleInterface $shortcut_set
+// *   (optional) The shortcut set to be edited. If not set, the current user's
+// *   shortcut set will be used.
+// *
+// * @return \Drupal\Core\Access\AccessResultInterface
+// *   The access result.
+// */
+//function grade_scale_set_edit_access(GradeScaleInterface $shortcut_set = NULL) {
+//  $account = \Drupal::currentUser();
+//
+//  // Shortcut administrators can edit any set.
+//  if ($account->hasPermission('administer grade scales')) {
+//    return AccessResult::allowed()->cachePerPermissions();
+//  }
+//
+//  // Sufficiently-privileged users can edit their currently displayed shortcut
+//  // set, but not other sets. They must also be able to access shortcuts.
+//  $may_edit_current_shortcut_set = $account->hasPermission('customize grade scales') && (!isset($shortcut_set) || $shortcut_set == grade_scale_current_displayed_set()) && $account->hasPermission('access shortcuts');
+//  return AccessResult::allowedIf($may_edit_current_shortcut_set)->cachePerPermissions();
+//}
 
 ///**
 // * Access callback for switching the shortcut set assigned to a user account.
