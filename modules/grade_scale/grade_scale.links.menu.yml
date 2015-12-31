@@ -1,0 +1,5 @@
+entity.grade_scale.collection:
+  title: 'Grade scales'
+  description: 'Add and modify grade scales.'
+  route_name: entity.grade_scale.collection
+  parent: gradebook.admin_index

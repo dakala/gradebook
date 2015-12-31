@@ -1,0 +1,6 @@
+drupal.grade_scale:
+  version: VERSION
+  css:
+    theme:
+      css/grade_scale.theme.css: {}
+      css/grade_scale.icons.theme.css: {}

@@ -1,0 +1,7 @@
+administer grade scales:
+  title: 'Administer grade scales'
+customize grade scales:
+  title: 'Edit grade scales'
+  description: 'Edit the current grade scale.'
+access grade scales:
+  title: 'Use grade scales'

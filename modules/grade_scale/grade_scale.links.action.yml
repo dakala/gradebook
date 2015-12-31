@@ -1,0 +1,5 @@
+grade_scale_add_local_action:
+  route_name: grade_scale.add
+  title: 'Add grade scale'
+  appears_on:
+    - entity.grade_scale.collection

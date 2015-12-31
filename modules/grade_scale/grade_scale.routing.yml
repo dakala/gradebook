@@ -1,0 +1,41 @@
+entity.grade_scale.collection:
+  path: '/admin/config/gradebook/grade_scale'
+  defaults:
+    _entity_list: 'grade_scale'
+    _title: 'Grade scales'
+  requirements:
+    _permission: 'administer grade scales'
+
+grade_scale.add:
+  path: '/admin/config/gradebook/grade_scale/add'
+  defaults:
+    _entity_form: 'grade_scale.add'
+    _title: 'Add grade scales'
+  requirements:
+    _entity_create_access: 'grade_scale'
+
+entity.grade_scale.edit_form:
+  path: '/admin/config/gradebook/grade_scale/{grade_scale}/edit'
+  defaults:
+    _entity_form: 'grade_scale.edit'
+    _title: 'Edit grade scales'
+  requirements:
+    _entity_access: 'grade_scale.update'
+
+entity.grade_scale.delete_form:
+  path: '/admin/config/gradebook/grade_scale/{grade_scale}/delete'
+  defaults:
+    _entity_form: 'grade_scale.delete'
+    _title: 'Delete grade scale'
+  requirements:
+    _entity_access: 'grade_scale.delete'
+
+entity.grade_scale.canonical:
+  path: '/admin/config/gradebook/grade_scale/{grade_scale}'
+  defaults:
+    _controller: '\Drupal\grade_scale\Controller\GradeScaleViewController::view'
+    _title_callback: '\Drupal\grade_scale\Controller\GradeScaleViewController::title'
+  requirements:
+#  @todo: 'view' access
+    _entity_access: 'grade_scale.view'
+    grade_scale: \d+
