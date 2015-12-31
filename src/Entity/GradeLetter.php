@@ -86,6 +86,20 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
   /**
    * {@inheritdoc}
    */
+  public function getGradeLetterSet() {
+    return $this->get('grade_letter_set')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setGradeLetterSet($grade_letter_set) {
+    return $this->set('grade_letter_set', $grade_letter_set);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getWeight() {
     return $this->get('weight')->value;
   }
