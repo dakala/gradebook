@@ -25,7 +25,7 @@ use Drupal\gradebook\GradeLetterSetInterface;
  *       "default" = "Drupal\gradebook\GradeLetterSetForm",
  *       "add" = "Drupal\gradebook\GradeLetterSetForm",
  *       "edit" = "Drupal\gradebook\GradeLetterSetForm",
- *       "customize" = "Drupal\gradebook\Form\SetCustomize",
+ *       "customize" = "Drupal\gradebook\Form\GradeLetterSetCustomize",
  *       "delete" = "Drupal\gradebook\Form\GradeLetterSetDeleteForm"
  *     }
  *   },
