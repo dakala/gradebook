@@ -70,10 +70,10 @@ class GradeLetterSetController extends ControllerBase {
 
       try {
         $shortcut->save();
-        drupal_set_message($this->t('Added a grade letter for %title.', array('%title' => $shortcut->label())));
+        drupal_set_message($this->t('Added a grade letter %title.', array('%title' => $shortcut->label())));
       }
       catch (\Exception $e) {
-        drupal_set_message($this->t('Unable to add a grade letter for %title.', array('%title' => $shortcut->label())), 'error');
+        drupal_set_message($this->t('Unable to add a grade letter %title.', array('%title' => $shortcut->label())), 'error');
       }
 
       return $this->redirect('<front>');

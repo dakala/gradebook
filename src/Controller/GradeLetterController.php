@@ -48,7 +48,7 @@ class GradeLetterController extends ControllerBase {
       drupal_set_message($this->t('The grade letter %title has been deleted.', array('%title' => $label)));
     }
     catch (\Exception $e) {
-      drupal_set_message($this->t('Unable to delete the grade letter for %title.', array('%title' => $label)), 'error');
+      drupal_set_message($this->t('Unable to delete the grade letter %title.', array('%title' => $label)), 'error');
     }
 
     return $this->redirect('<front>');

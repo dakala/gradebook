@@ -19,5 +19,10 @@ function gradebook_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<p>' . t('The Gradebook suite of modules allows users to manage <em>grade books</em> ...') . '</p>';
 
       return $output;
+
+    case 'entity.grade_letter_set.collection':
+    case 'grade_letter.set_add':
+    case 'entity.grade_letter_set.edit_form':
+      return '<p>' . t('TODO: gradebook_help() ...') . '</p>';
   }
 }
