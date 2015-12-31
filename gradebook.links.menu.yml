@@ -3,8 +3,6 @@ gradebook.admin_index:
   route_name: gradebook.admin_index
   parent: system.admin_config
   description: 'Administer the suite of Gradebook modules.'
-#  position: right
-#  weight: -10
 
 entity.grade_letter_set.collection:
   title: Grade letters

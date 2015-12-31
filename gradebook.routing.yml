@@ -81,15 +81,6 @@ entity.grade_letter.edit_form:
     _entity_access: 'grade_letter.update'
     grade_letter: \d+
 
-#entity.grade_letter.link_delete_inline:
-#  path: '/admin/config/user-interface/shortcut/link/{grade_letter}/delete-inline'
-#  defaults:
-#    _controller: 'Drupal\gradebook\Controller\GradeLetterController::deleteShortcutLinkInline'
-#  requirements:
-#    _entity_access: 'grade_letter.delete'
-#    _csrf_token: 'TRUE'
-#    grade_letter: \d+
-
 entity.grade_letter.delete_form:
   path: '/admin/config/gradebook/{grade_letter}/delete'
   defaults:
