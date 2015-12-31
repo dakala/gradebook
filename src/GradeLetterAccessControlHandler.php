@@ -27,19 +27,19 @@ class GradeLetterAccessControlHandler extends EntityAccessControlHandler impleme
    *
    * @var \Drupal\gradebook\GradeLetterSetStorageInterface
    */
-  protected $shortcutSetStorage;
+  protected $gradeLetterSetStorage;
 
   /**
    * Constructs a GradeLetterAccessControlHandler object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type definition.
-   * @param \Drupal\gradebook\GradeLetterSetStorageInterface $shortcut_set_storage
+   * @param \Drupal\gradebook\GradeLetterSetStorageInterface $grade_letter_set_storage
    *   The grade_letter_set storage.
    */
-  public function __construct(EntityTypeInterface $entity_type, GradeLetterSetStorageInterface $shortcut_set_storage) {
+  public function __construct(EntityTypeInterface $entity_type, GradeLetterSetStorageInterface $grade_letter_set_storage) {
     parent::__construct($entity_type);
-    $this->shortcutSetStorage = $shortcut_set_storage;
+    $this->gradeLetterSetStorage = $grade_letter_set_storage;
   }
 
   /**
@@ -56,7 +56,7 @@ class GradeLetterAccessControlHandler extends EntityAccessControlHandler impleme
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    if ($shortcut_set = $this->shortcutSetStorage->load($entity->bundle())) {
+    if ($shortcut_set = $this->gradeLetterSetStorage->load($entity->bundle())) {
       return gradebook_set_edit_access($shortcut_set, $account);
     }
     // @todo Fix this bizarre code: how can a shortcut exist without a shortcut
@@ -68,7 +68,7 @@ class GradeLetterAccessControlHandler extends EntityAccessControlHandler impleme
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    if ($shortcut_set = $this->shortcutSetStorage->load($entity_bundle)) {
+    if ($shortcut_set = $this->gradeLetterSetStorage->load($entity_bundle)) {
       return gradebook_set_edit_access($shortcut_set, $account);
     }
     // @todo Fix this bizarre code: how can a shortcut exist without a shortcut
