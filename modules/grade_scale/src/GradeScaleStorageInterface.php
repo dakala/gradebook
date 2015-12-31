@@ -18,12 +18,12 @@ interface GradeScaleStorageInterface extends ConfigEntityStorageInterface {
   /**
    * Assigns a user to a particular shortcut set.
    *
-   * @param \Drupal\grade_scale\GradeScaleInterface $shortcut_set
+   * @param \Drupal\grade_scale\GradeScaleInterface $grade_scale
    *   An object representing the shortcut set.
    * @param $account
    *   A user account that will be assigned to use the set.
    */
-  public function assignUser(GradeScaleInterface $shortcut_set, $account);
+  public function assignUser(GradeScaleInterface $grade_scale, $account);
 
   /**
    * Unassigns a user from any shortcut set they may have been assigned to.
@@ -62,13 +62,13 @@ interface GradeScaleStorageInterface extends ConfigEntityStorageInterface {
   /**
    * Get the number of users who have this set assigned to them.
    *
-   * @param \Drupal\grade_scale\GradeScaleInterface $shortcut_set
+   * @param \Drupal\grade_scale\GradeScaleInterface $grade_scale
    *   The shortcut to count the users assigned to.
    *
    * @return int
    *   The number of users who have this set assigned to them.
    */
-  public function countAssignedUsers(GradeScaleInterface $shortcut_set);
+  public function countAssignedUsers(GradeScaleInterface $grade_scale);
 
   /**
    * Gets the default shortcut set for a given user account.

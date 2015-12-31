@@ -36,6 +36,5 @@ entity.grade_scale.canonical:
     _controller: '\Drupal\grade_scale\Controller\GradeScaleViewController::view'
     _title_callback: '\Drupal\grade_scale\Controller\GradeScaleViewController::title'
   requirements:
-#  @todo: 'view' access
     _entity_access: 'grade_scale.view'
     grade_scale: \d+

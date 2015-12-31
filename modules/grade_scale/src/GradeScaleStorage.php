@@ -75,10 +75,10 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
   /**
    * {@inheritdoc}
    */
-  public function assignUser(GradeScaleInterface $shortcut_set, $account) {
+  public function assignUser(GradeScaleInterface $grade_scale, $account) {
     db_merge('shortcut_set_users')
       ->key('uid', $account->id())
-      ->fields(array('set_name' => $shortcut_set->id()))
+      ->fields(array('set_name' => $grade_scale->id()))
       ->execute();
     drupal_static_reset('grade_scale_current_displayed_set');
   }
@@ -106,8 +106,8 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
   /**
    * {@inheritdoc}
    */
-  public function countAssignedUsers(GradeScaleInterface $shortcut_set) {
-    return db_query('SELECT COUNT(*) FROM {shortcut_set_users} WHERE set_name = :name', array(':name' => $shortcut_set->id()))->fetchField();
+  public function countAssignedUsers(GradeScaleInterface $grade_scale) {
+    return db_query('SELECT COUNT(*) FROM {shortcut_set_users} WHERE set_name = :name', array(':name' => $grade_scale->id()))->fetchField();
   }
 
   /**
@@ -120,14 +120,14 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
     // default, which is the lowest-numbered shortcut set.
     $suggestions = array_reverse($this->moduleHandler->invokeAll('shortcut_default_set', array($account)));
     $suggestions[] = 'default';
-    $shortcut_set = NULL;
+    $grade_scale = NULL;
     foreach ($suggestions as $name) {
-      if ($shortcut_set = $this->load($name)) {
+      if ($grade_scale = $this->load($name)) {
         break;
       }
     }
 
-    return $shortcut_set;
+    return $grade_scale;
   }
 
 }

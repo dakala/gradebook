@@ -217,6 +217,4 @@ class GradeScale extends ContentEntityBase implements GradeScaleInterface {
 
     return $fields;
   }
-
-
 }

@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Database\Connection;
 
 /**
- * Builds the shortcut set deletion form.
+ * Builds the grade scale set deletion form.
  */
 class GradeScaleDeleteForm extends EntityDeleteForm {
 

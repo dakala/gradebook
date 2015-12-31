@@ -12,7 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 
 /**
- * Defines a class to build a listing of shortcut set entities.
+ * Defines a class to build a listing of grade scale entities.
  *
  * @see \Drupal\grade_scale\Entity\GradeScaleSet
  */

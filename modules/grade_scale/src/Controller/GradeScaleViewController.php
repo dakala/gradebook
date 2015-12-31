@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Controller\EntityViewController;
 
 /**
- * Defines a controller to render a single node.
+ * Defines a controller to render a single grade scale.
  */
 class GradeScaleViewController extends EntityViewController {
 

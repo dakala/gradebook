@@ -174,9 +174,9 @@ class GradeScaleTest extends GradeScaleTestBase {
   function testGradeScaleUnassign() {
     $new_set = $this->generateGradeScale($this->randomMachineName());
 
-    $shortcut_set_storage = \Drupal::entityManager()->getStorage('shortcut_set');
-    $shortcut_set_storage->assignUser($new_set, $this->shortcutUser);
-    $shortcut_set_storage->unassignUser($this->shortcutUser);
+    $grade_scale_storage = \Drupal::entityManager()->getStorage('shortcut_set');
+    $grade_scale_storage->assignUser($new_set, $this->shortcutUser);
+    $grade_scale_storage->unassignUser($this->shortcutUser);
     $current_set = grade_scale_current_displayed_set($this->shortcutUser);
     $default_set = shortcut_default_set($this->shortcutUser);
     $this->assertTrue($current_set->id() == $default_set->id(), "Successfully unassigned another user's shortcut set.");
