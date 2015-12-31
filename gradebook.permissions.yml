@@ -1,4 +1,7 @@
-administer gradebook:
+administer gradebooks:
   title: 'Administer grade books'
 access gradebooks:
   title: 'Use grade books'
+#  grade letters
+administer grade letters:
+  title: 'Administer grade letters and sets'

@@ -25,13 +25,7 @@ class GradeLetterSetAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'update':
-        if ($account->hasPermission('administer shortcuts')) {
-          return AccessResult::allowed()->cachePerPermissions();
-        }
-        if (!$account->hasPermission('access shortcuts')) {
-          return AccessResult::neutral()->cachePerPermissions();
-        }
-        return AccessResult::allowedIf($account->hasPermission('customize grade letters') && $entity == shortcut_current_displayed_set($account))->cachePerPermissions()->cacheUntilEntityChanges($entity);
+        return AccessResult::allowedIf($account->hasPermission('administer grade letters'))->cachePerPermissions()->cacheUntilEntityChanges($entity);
 
       case 'delete':
         return AccessResult::allowedIf($account->hasPermission('administer grade letters') && $entity->id() != 'default')->cachePerPermissions();
@@ -46,7 +40,7 @@ class GradeLetterSetAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'administer grade letters')->orIf(AccessResult::allowedIfHasPermissions($account, ['access grade letters', 'customize grade letters'], 'AND'));
+    return AccessResult::allowedIfHasPermission($account, 'administer grade letters');
   }
 
 }

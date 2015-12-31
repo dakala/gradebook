@@ -16,64 +16,35 @@ use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines the access control handler for the shortcut entity type.
+ * Defines the access control handler for the grade letter entity type.
  *
  * @see \Drupal\gradebook\Entity\GradeLetter
  */
-class GradeLetterAccessControlHandler extends EntityAccessControlHandler implements EntityHandlerInterface {
-
-  /**
-   * The grade_letter_set storage.
-   *
-   * @var \Drupal\gradebook\GradeLetterSetStorageInterface
-   */
-  protected $gradeLetterSetStorage;
-
-  /**
-   * Constructs a GradeLetterAccessControlHandler object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type definition.
-   * @param \Drupal\gradebook\GradeLetterSetStorageInterface $grade_letter_set_storage
-   *   The grade_letter_set storage.
-   */
-  public function __construct(EntityTypeInterface $entity_type, GradeLetterSetStorageInterface $grade_letter_set_storage) {
-    parent::__construct($entity_type);
-    $this->gradeLetterSetStorage = $grade_letter_set_storage;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
-    return new static(
-      $entity_type,
-      $container->get('entity.manager')->getStorage('grade_letter_set')
-    );
-  }
+class GradeLetterAccessControlHandler extends EntityAccessControlHandler {
 
   /**
    * {@inheritdoc}
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    if ($shortcut_set = $this->gradeLetterSetStorage->load($entity->bundle())) {
-      return gradebook_set_edit_access($shortcut_set, $account);
+    switch ($operation) {
+      case 'update':
+        return AccessResult::allowedIf($account->hasPermission('administer grade letters'))->cachePerPermissions()->cacheUntilEntityChanges($entity);
+
+      case 'delete':
+        return AccessResult::allowedIf($account->hasPermission('administer grade letters') && $entity->getGradeLetterSet() != 'default')->cachePerPermissions();
+
+      default:
+        // No opinion.
+        return AccessResult::neutral();
     }
-    // @todo Fix this bizarre code: how can a shortcut exist without a shortcut
-    // set? The above if-test is unnecessary. See https://www.drupal.org/node/2339903.
-    return AccessResult::neutral()->cacheUntilEntityChanges($entity);
   }
 
   /**
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    if ($shortcut_set = $this->gradeLetterSetStorage->load($entity_bundle)) {
-      return gradebook_set_edit_access($shortcut_set, $account);
-    }
-    // @todo Fix this bizarre code: how can a shortcut exist without a shortcut
-    // set? The above if-test is unnecessary. See https://www.drupal.org/node/2339903.
-    return AccessResult::neutral();
+    return AccessResult::allowedIfHasPermission($account, 'administer grade letters');
   }
+
 
 }
