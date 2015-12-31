@@ -1,8 +1,3 @@
-#grade_letter.set_switch:
-#  route_name: grade_letter.set_switch
-#  base_route: entity.user.canonical
-#  title: 'Grade letters'
-#
 #entity.grade_letter_set.customize_form:
 #  title: 'List links'
 #  route_name: entity.grade_letter_set.customize_form
