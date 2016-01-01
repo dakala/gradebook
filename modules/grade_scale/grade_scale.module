@@ -77,7 +77,7 @@ function template_preprocess_grade_scale(&$variables) {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
 
   $variables['grade_scale'] = $variables['elements']['#grade_scale'];
-  /** @var \Drupal\node\NodeInterface $node */
+  /** @var \Drupal\grade_scale\GradeScaleInterface $grade_scale */
   $grade_scale = $variables['grade_scale'];
   
   $variables['date'] = drupal_render($variables['elements']['created']);
@@ -87,11 +87,6 @@ function template_preprocess_grade_scale(&$variables) {
 
   $variables['label'] = $variables['elements']['title'];
   unset($variables['elements']['title']);
-//  // The 'page' variable is set to TRUE in two occasions:
-//  //   - The view mode is 'full' and we are on the 'node.view' route.
-//  //   - The node is in preview and view mode is either 'full' or 'default'.
-//  $variables['page'] = ($variables['view_mode'] == 'full' && (node_is_page($node)) || (isset($node->in_preview) && in_array($node->preview_view_mode, array('full', 'default'))));
-
   // Helpful $content variable for templates.
   $variables += array('content' => array());
   foreach (Element::children($variables['elements']) as $key) {
