@@ -154,7 +154,7 @@ class GradeScale extends ContentEntityBase implements GradeScaleInterface {
       ->setDescription(t('A description of the grade scale.'))
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'text_default',
         'weight' => 0,
       ))
@@ -172,13 +172,20 @@ class GradeScale extends ContentEntityBase implements GradeScaleInterface {
       ->setRequired(TRUE)
       ->setTranslatable(TRUE)
       ->setSetting('max_length', 255)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'text_default',
+        'weight' => 0,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -8,
         'settings' => array(
           'size' => 60,
         ),
-      ));
+      ))
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
