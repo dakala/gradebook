@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_help().
@@ -24,3 +25,77 @@ function grade_scale_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
+
+/**
+ * Implements hook_theme().
+ */
+function grade_scale_theme() {
+  return array(
+    'grade_scale' => array(
+      'render element' => 'elements',
+    ),
+//    'field__grade_scale__created' => array(
+//      'base hook' => 'field',
+//    ),
+  );
+}
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function grade_scale_theme_suggestions_grade_scale(array $variables) {
+  $suggestions = array();
+  $grade_scale = $variables['elements']['#grade_scale'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'grade_scale__' . $sanitized_view_mode;
+//  $suggestions[] = 'grade_scale__' . $grade_scale->bundle();
+//  $suggestions[] = 'grade_scale__' . $grade_scale->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'grade_scale__' . $grade_scale->id();
+  $suggestions[] = 'grade_scale__' . $grade_scale->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for node templates.
+ *
+ * Default template: node.html.twig.
+ *
+ * Most themes use their own copy of node.html.twig. The default is located
+ * inside "/core/modules/node/templates/node.html.twig". Look in there for the
+ * full list of variables.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function template_preprocess_grade_scale(&$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+
+  $variables['grade_scale'] = $variables['elements']['#grade_scale'];
+  /** @var \Drupal\node\NodeInterface $node */
+  $grade_scale = $variables['grade_scale'];
+  
+  $variables['date'] = drupal_render($variables['elements']['created']);
+  unset($variables['elements']['created']);
+  $variables['author_name'] = drupal_render($variables['elements']['uid']);
+  unset($variables['elements']['uid']);
+
+  $variables['label'] = $variables['elements']['title'];
+  unset($variables['elements']['title']);
+//  // The 'page' variable is set to TRUE in two occasions:
+//  //   - The view mode is 'full' and we are on the 'node.view' route.
+//  //   - The node is in preview and view mode is either 'full' or 'default'.
+//  $variables['page'] = ($variables['view_mode'] == 'full' && (node_is_page($node)) || (isset($node->in_preview) && in_array($node->preview_view_mode, array('full', 'default'))));
+
+  // Helpful $content variable for templates.
+  $variables += array('content' => array());
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+}
