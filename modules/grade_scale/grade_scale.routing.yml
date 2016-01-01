@@ -33,7 +33,7 @@ entity.grade_scale.delete_form:
 entity.grade_scale.canonical:
   path: '/admin/config/gradebook/grade_scale/{grade_scale}'
   defaults:
-    _controller: '\Drupal\grade_scale\Controller\GradeScaleViewController::view'
+    _entity_view: 'grade_scale.full'
     _title_callback: '\Drupal\grade_scale\Controller\GradeScaleViewController::title'
   requirements:
     _entity_access: 'grade_scale.view'
