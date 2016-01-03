@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Grade display type'
+vid: grade_display_type
+description: 'How to display grade marks or scores'
+hierarchy: 0
+weight: 0
