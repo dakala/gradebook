@@ -17,7 +17,7 @@ use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines a storage for shortcut_set entities.
+ * Defines a storage for grade scale entities.
  */
 class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorageInterface {
 
@@ -67,7 +67,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
   public function deleteAssignedGradeScales(GradeScaleInterface $entity) {
     // First, delete any user assignments for this set, so that each of these
     // users will go back to using whatever default set applies.
-    db_delete('shortcut_set_users')
+    db_delete('grade_scale_users')
       ->condition('set_name', $entity->id())
       ->execute();
   }
@@ -76,7 +76,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function assignUser(GradeScaleInterface $grade_scale, $account) {
-    db_merge('shortcut_set_users')
+    db_merge('grade_scale_users')
       ->key('uid', $account->id())
       ->fields(array('set_name' => $grade_scale->id()))
       ->execute();
@@ -87,7 +87,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function unassignUser($account) {
-    $deleted = db_delete('shortcut_set_users')
+    $deleted = db_delete('grade_scale_users')
       ->condition('uid', $account->id())
       ->execute();
     return (bool) $deleted;
@@ -97,7 +97,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function getAssignedToUser($account) {
-    $query = db_select('shortcut_set_users', 'ssu');
+    $query = db_select('grade_scale_users', 'ssu');
     $query->fields('ssu', array('set_name'));
     $query->condition('ssu.uid', $account->id());
     return $query->execute()->fetchField();
@@ -107,7 +107,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function countAssignedUsers(GradeScaleInterface $grade_scale) {
-    return db_query('SELECT COUNT(*) FROM {shortcut_set_users} WHERE set_name = :name', array(':name' => $grade_scale->id()))->fetchField();
+    return db_query('SELECT COUNT(*) FROM {grade_scale_users} WHERE set_name = :name', array(':name' => $grade_scale->id()))->fetchField();
   }
 
   /**

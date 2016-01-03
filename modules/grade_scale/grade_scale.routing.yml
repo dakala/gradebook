@@ -30,7 +30,7 @@ entity.grade_scale.delete_form:
   requirements:
     _entity_access: 'grade_scale.delete'
 
-entity.grade_scale.canonical:
+entity.grade_scale.grade:
   path: '/admin/config/gradebook/grade_scale/{grade_scale}'
   defaults:
     _entity_view: 'grade_scale.full'

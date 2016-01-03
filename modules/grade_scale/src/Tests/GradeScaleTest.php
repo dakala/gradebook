@@ -43,10 +43,10 @@ class GradeScaleTest extends GradeScaleTestBase {
       'id' => strtolower($this->randomMachineName()),
     );
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $new_set = $this->container->get('entity.manager')->getStorage('shortcut_set')->load($edit['id']);
-    $this->assertIdentical($new_set->id(), $edit['id'], 'Successfully created a shortcut set.');
-    $this->drupalGet('user/' . $this->adminUser->id() . '/shortcuts');
-    $this->assertText($new_set->label(), 'Generated shortcut set was listed as a choice on the user account page.');
+    $new_set = $this->container->get('entity.manager')->getStorage('grade_scale')->load($edit['id']);
+    $this->assertIdentical($new_set->id(), $edit['id'], 'Successfully created a grade scale.');
+    $this->drupalGet('user/' . $this->adminUser->id() . '/grade_scales');
+    $this->assertText($new_set->label(), 'Generated grade scale was listed as a choice on the user account page.');
   }
 
   /**
@@ -122,9 +122,9 @@ class GradeScaleTest extends GradeScaleTestBase {
   function testGradeScaleAssign() {
     $new_set = $this->generateGradeScale($this->randomMachineName());
 
-    \Drupal::entityManager()->getStorage('shortcut_set')->assignUser($new_set, $this->shortcutUser);
+    \Drupal::entityManager()->getStorage('grade_scale')->assignUser($new_set, $this->shortcutUser);
     $current_set = grade_scale_current_displayed_set($this->shortcutUser);
-    $this->assertTrue($new_set->id() == $current_set->id(), "Successfully switched another user's shortcut set.");
+    $this->assertTrue($new_set->id() == $current_set->id(), "Successfully switched another user's grade scale.");
   }
 
   /**
@@ -174,12 +174,12 @@ class GradeScaleTest extends GradeScaleTestBase {
   function testGradeScaleUnassign() {
     $new_set = $this->generateGradeScale($this->randomMachineName());
 
-    $grade_scale_storage = \Drupal::entityManager()->getStorage('shortcut_set');
+    $grade_scale_storage = \Drupal::entityManager()->getStorage('grade_scale');
     $grade_scale_storage->assignUser($new_set, $this->shortcutUser);
     $grade_scale_storage->unassignUser($this->shortcutUser);
     $current_set = grade_scale_current_displayed_set($this->shortcutUser);
     $default_set = shortcut_default_set($this->shortcutUser);
-    $this->assertTrue($current_set->id() == $default_set->id(), "Successfully unassigned another user's shortcut set.");
+    $this->assertTrue($current_set->id() == $default_set->id(), "Successfully unassigned another user's grade scale.");
   }
 
   /**

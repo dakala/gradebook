@@ -5,3 +5,10 @@ customize grade scales:
   description: 'Edit the current grade scale.'
 access grade scales:
   title: 'Use grade scales'
+administer grade items:
+  title: 'Administer grade items'
+edit grade items:
+  title: 'Edit grade items'
+  description: 'Edit the current grade item.'
+access grade items:
+  title: 'Use grade items'

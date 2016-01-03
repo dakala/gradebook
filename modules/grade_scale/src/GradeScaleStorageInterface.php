@@ -11,7 +11,7 @@ use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Defines an interface for shortcut_set entity storage classes.
+ * Defines an interface for grade scale entity storage classes.
  */
 interface GradeScaleStorageInterface extends ConfigEntityStorageInterface {
 

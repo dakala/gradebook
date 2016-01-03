@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Render\Element;
 
 /**
@@ -34,9 +36,6 @@ function grade_scale_theme() {
     'grade_scale' => array(
       'render element' => 'elements',
     ),
-//    'field__grade_scale__created' => array(
-//      'base hook' => 'field',
-//    ),
   );
 }
 
@@ -50,8 +49,6 @@ function grade_scale_theme_suggestions_grade_scale(array $variables) {
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   $suggestions[] = 'grade_scale__' . $sanitized_view_mode;
-//  $suggestions[] = 'grade_scale__' . $grade_scale->bundle();
-//  $suggestions[] = 'grade_scale__' . $grade_scale->bundle() . '__' . $sanitized_view_mode;
   $suggestions[] = 'grade_scale__' . $grade_scale->id();
   $suggestions[] = 'grade_scale__' . $grade_scale->id() . '__' . $sanitized_view_mode;
 
@@ -92,5 +89,36 @@ function template_preprocess_grade_scale(&$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+}
 
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function grade_scale_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'grade_item') {
+    $fields['grade_scale'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Scale'))
+      ->setDescription(t('The scale to use when grading, if applicable.'))
+      ->setName('grade_scale')
+      ->setProvider('grade_scale')
+      ->setTargetEntityTypeId('grade_item')
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'grade_scale')
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => 16,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -16,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+  }
 }

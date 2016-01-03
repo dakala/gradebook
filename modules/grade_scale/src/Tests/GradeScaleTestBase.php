@@ -61,7 +61,7 @@ abstract class GradeScaleTestBase extends WebTestBase {
 
       // Populate the default shortcut set.
       $shortcut = Shortcut::create(array(
-        'shortcut_set' => 'default',
+        'grade_scale' => 'default',
         'title' => t('Add content'),
         'weight' => -20,
         'link' => array(
@@ -71,7 +71,7 @@ abstract class GradeScaleTestBase extends WebTestBase {
       $shortcut->save();
 
       $shortcut = Shortcut::create(array(
-        'shortcut_set' => 'default',
+        'grade_scale' => 'default',
         'title' => t('All content'),
         'weight' => -19,
         'link' => array(
@@ -91,7 +91,7 @@ abstract class GradeScaleTestBase extends WebTestBase {
     // Log in as admin and grab the default shortcut set.
     $this->drupalLogin($this->adminUser);
     $this->set = GradeScale::load('default');
-    \Drupal::entityManager()->getStorage('shortcut_set')->assignUser($this->set, $this->adminUser);
+    \Drupal::entityManager()->getStorage('grade_scale')->assignUser($this->set, $this->adminUser);
   }
 
   /**
