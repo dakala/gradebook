@@ -25,7 +25,7 @@ class GradeLetterSetForm extends BundleEntityFormBase {
     $form['label'] = array(
       '#type' => 'textfield',
       '#title' => t('Set name'),
-      '#description' => t('The new set is created by copying items from your default grade letter set.'),
+      '#description' => t('Add a name for this grade letter set.'),
       '#required' => TRUE,
       '#default_value' => $entity->label(),
     );
@@ -61,7 +61,7 @@ class GradeLetterSetForm extends BundleEntityFormBase {
     else {
       drupal_set_message(t('Updated set name to %set-name.', array('%set-name' => $entity->label())));
     }
-    $form_state->setRedirectUrl($this->entity->urlInfo('customize-form'));
+    $form_state->setRedirectUrl($this->entity->urlInfo('list-form'));
   }
 
 }

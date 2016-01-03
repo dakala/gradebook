@@ -26,7 +26,8 @@ class GradeLetterDeleteForm extends ContentEntityDeleteForm {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.grade_letter_set.customize_form', array(
+//    'entity.grade_letter_set.customize_form'
+    return new Url('entity.grade_letter_set.list_form', array(
       'grade_letter_set' => $this->entity->bundle(),
     ));
   }

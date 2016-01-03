@@ -1,3 +1,4 @@
+# gradebook
 gradebook.admin_index:
   path: '/admin/config/gradebook'
   defaults:
@@ -6,6 +7,7 @@ gradebook.admin_index:
   requirements:
     _permission: 'administer gradebooks'
 
+# grade letter set
 entity.grade_letter_set.delete_form:
   path: '/admin/config/gradebook/grade_letter_set/manage/{grade_letter_set}/delete'
   defaults:
@@ -30,13 +32,13 @@ entity.grade_letter_set.edit_form:
   requirements:
     _entity_access: 'grade_letter_set.update'
 
-#entity.grade_letter_set.customize_form:
-#  path: '/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/customize'
-#  defaults:
-#    _entity_form: 'grade_letter_set.customize'
-#    _title: 'List grade letters'
-#  requirements:
-#    _entity_access: 'grade_letter_set.update'
+entity.grade_letter_set.list_form:
+  path: '/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/list'
+  defaults:
+    _entity_form: 'grade_letter_set.list'
+    _title: 'List grade letters'
+  requirements:
+    _entity_access: 'grade_letter_set.update'
 
 grade_letter.set_add:
   path: '/admin/config/gradebook/grade_letter/add'
@@ -44,16 +46,16 @@ grade_letter.set_add:
     _entity_form: 'grade_letter_set.add'
     _title: 'Add grade letter set'
   requirements:
-    _entity_create_access: 'grade_letter_set.update'
+    _entity_create_access: 'grade_letter_set'
 
-#grade_letter.link_add:
-#  path: '/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/add-link'
-#  defaults:
-#    _controller: '\Drupal\gradebook\Controller\GradeLetterController::addForm'
-#    _title: 'Add grade letter'
-#  requirements:
-##  @todo: _entity_create_access
-#    _entity_create_access: 'grade_letter:{grade_letter_set}'
+# grade letter
+grade_letter.letter_add:
+  path: '/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/add'
+  defaults:
+    _controller: '\Drupal\gradebook\Controller\GradeLetterController::addForm'
+    _title: 'Add grade letter'
+  requirements:
+    _entity_create_access: 'grade_letter:{grade_letter_set}'
 
 entity.grade_letter.canonical:
   path: '/admin/config/gradebook/grade_letter/{grade_letter}'
@@ -81,3 +83,45 @@ entity.grade_letter.delete_form:
   requirements:
     _entity_access: 'grade_letter.delete'
     grade_letter: \d+
+
+# grade item
+entity.grade_item.collection:
+  path: '/admin/config/gradebook/grade_item'
+  defaults:
+    _entity_list: 'grade_item'
+    _title: 'Grade items'
+  requirements:
+    _permission: 'administer grade items'
+
+grade_item.add:
+  path: '/admin/config/gradebook/grade_item/add'
+  defaults:
+    _entity_form: 'grade_item.add'
+    _title: 'Add grade items'
+  requirements:
+    _entity_create_access: 'grade_item'
+
+entity.grade_item.edit_form:
+  path: '/admin/config/gradebook/grade_item/{grade_item}/edit'
+  defaults:
+    _entity_form: 'grade_item.edit'
+    _title: 'Edit grade item'
+  requirements:
+    _entity_access: 'grade_item.update'
+
+entity.grade_item.delete_form:
+  path: '/admin/config/gradebook/grade_item/{grade_item}/delete'
+  defaults:
+    _entity_form: 'grade_item.delete'
+    _title: 'Delete grade item'
+  requirements:
+    _entity_access: 'grade_item.delete'
+
+entity.grade_item.canonical:
+  path: '/admin/config/gradebook/grade_item/{grade_item}'
+  defaults:
+    _entity_view: 'grade_item.full'
+#    _title_callback: '\Drupal\grade_item\Controller\GradeScaleViewController::title'
+  requirements:
+    _entity_access: 'grade_item.view'
+    grade_item: \d+

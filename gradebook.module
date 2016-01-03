@@ -9,6 +9,10 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 
+define("GRADE_ITEM_VALUATION_NUMERIC", 0);
+define("GRADE_ITEM_VALUATION_SCALE", 1);
+define("GRADE_ITEM_VALUATION_STRING", 2);
+
 /**
  * Implements hook_help().
  */
@@ -20,9 +24,25 @@ function gradebook_help($route_name, RouteMatchInterface $route_match) {
 
       return $output;
 
-    case 'entity.grade_letter_set.collection':
+    case 'entity.grade_letter_set.canonical':
     case 'grade_letter.set_add':
     case 'entity.grade_letter_set.edit_form':
       return '<p>' . t('TODO: gradebook_help() ...') . '</p>';
   }
+}
+
+
+/**
+ * @todo: implement a hook for this.
+ *
+ * hook_grade_valuation_info();
+ *
+ * @return array
+ */
+function gradebook_grade_valuation_options() {
+  return [
+    GRADE_ITEM_VALUATION_NUMERIC => t('The grade is represented by a number.'),
+    GRADE_ITEM_VALUATION_SCALE => t('The grade is a value from a pre-defined scale.'),
+    GRADE_ITEM_VALUATION_STRING => t('The grade is a textual feedback only.')
+  ];
 }

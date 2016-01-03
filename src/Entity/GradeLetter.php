@@ -44,7 +44,7 @@ use Drupal\gradebook\GradeLetterInterface;
  *   links = {
  *     "canonical" = "/admin/config/gradebook/{grade_letter}",
  *     "delete-form" = "/admin/config/gradebook/{grade_letter}/delete",
- *     "edit-form" = "/admin/config/gradebook/{grade_letter}",
+ *     "edit-form" = "/admin/config/gradebook/{grade_letter}/edit",
  *   },
  *   list_cache_tags = { "config:grade_letter_set_list" },
  *   bundle_entity_type = "grade_letter_set"

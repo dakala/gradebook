@@ -25,7 +25,7 @@ use Drupal\gradebook\GradeLetterSetInterface;
  *       "default" = "Drupal\gradebook\GradeLetterSetForm",
  *       "add" = "Drupal\gradebook\GradeLetterSetForm",
  *       "edit" = "Drupal\gradebook\GradeLetterSetForm",
- *       "customize" = "Drupal\gradebook\Form\GradeLetterSetCustomize",
+ *       "list" = "Drupal\gradebook\Form\GradeLetterSetCustomize",
  *       "delete" = "Drupal\gradebook\Form\GradeLetterSetDeleteForm"
  *     }
  *   },
@@ -36,10 +36,10 @@ use Drupal\gradebook\GradeLetterSetInterface;
  *     "label" = "label"
  *   },
  *   links = {
- *     "customize-form" = "/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/customize",
+ *     "list-form" = "/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/list",
  *     "delete-form" = "/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/delete",
- *     "edit-form" = "/admin/config/gradebook/grade_letter/manage/{grade_letter_set}",
- *     "collection" = "/admin/config/gradebook/grade_letter",
+ *     "edit-form" = "/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/edit",
+ *     "canonical" = "/admin/config/gradebook/grade_letter_set",
  *   },
  *   config_export = {
  *     "id",
@@ -62,60 +62,6 @@ class GradeLetterSet extends ConfigEntityBundleBase implements GradeLetterSetInt
    * @var string
    */
   protected $label;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    if (!$update && !$this->isSyncing()) {
-      // Save a new grade letter set with links copied from the user's default set.
-      $default_set = shortcut_default_set();
-      // This is the default set, do not copy shortcuts.
-      if ($default_set->id() != $this->id()) {
-        foreach ($default_set->getGradeLetters() as $shortcut) {
-          $shortcut = $shortcut->createDuplicate();
-          $shortcut->enforceIsNew();
-          $shortcut->grade_letter_set->target_id = $this->id();
-          $shortcut->save();
-        }
-      }
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function preDelete(EntityStorageInterface $storage, array $entities) {
-    parent::preDelete($storage, $entities);
-
-    foreach ($entities as $entity) {
-      $storage->deleteAssignedGradeLetterSets($entity);
-
-      // Next, delete the shortcuts for this set.
-      $shortcut_ids = \Drupal::entityQuery('grade_letter')
-        ->condition('grade_letter_set', $entity->id(), '=')
-        ->execute();
-
-      $controller = \Drupal::entityManager()->getStorage('grade_letter');
-      $entities = $controller->loadMultiple($shortcut_ids);
-      $controller->delete($entities);
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function resetLinkWeights() {
-    $weight = -50;
-    foreach ($this->getGradeLetters() as $shortcut) {
-      $shortcut->setWeight(++$weight);
-      $shortcut->save();
-    }
-
-    return $this;
-  }
 
   /**
    * {@inheritdoc}

@@ -36,9 +36,9 @@ class GradeLetterForm extends ContentEntityForm {
       $message = $this->t('Added a grade letter for %title.', array('%title' => $entity->getTitle()));
     }
     drupal_set_message($message);
-
+//'entity.grade_letter_set.customize_form'
     $form_state->setRedirect(
-      'entity.grade_letter_set.customize_form',
+      'entity.grade_letter_set.list_form',
       array('grade_letter_set' => $entity->bundle())
     );
   }

@@ -37,7 +37,7 @@ class GradeLetterSetListBuilder extends ConfigEntityListBuilder {
 
     $operations['list'] = array(
       'title' => t('List grade letters'),
-      'url' => $entity->urlInfo('customize-form'),
+      'url' => $entity->urlInfo('list-form'),
     );
 
     return $operations;

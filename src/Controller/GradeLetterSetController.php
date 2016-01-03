@@ -46,7 +46,7 @@ class GradeLetterSetController extends ControllerBase {
   /**
    * Creates a new link in the provided grade letter set.
    *
-   * @param \Drupal\gradebook\GradeLetterSetInterface $shortcut_set
+   * @param \Drupal\gradebook\GradeLetterSetInterface $grade_letter_set
    *   The grade letter set to add a link to.
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request object.
@@ -56,13 +56,13 @@ class GradeLetterSetController extends ControllerBase {
    *
    * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
    */
-  public function addShortcutLinkInline(GradeLetterSetInterface $shortcut_set, Request $request) {
+  public function addShortcutLinkInline(GradeLetterSetInterface $grade_letter_set, Request $request) {
     $link = $request->query->get('link');
     $name = $request->query->get('name');
     if (parse_url($link, PHP_URL_SCHEME) === NULL && $this->pathValidator->isValid($link)) {
       $shortcut = $this->entityManager()->getStorage('grade_letter')->create(array(
         'title' => $name,
-        'grade_letter_set' => $shortcut_set->id(),
+        'grade_letter_set' => $grade_letter_set->id(),
         'link' => array(
           'uri' => 'internal:/' . $link,
         ),

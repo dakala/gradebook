@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
 /**
- * Builds the shortcut set customize form.
+ * Builds the grade letter set list form.
  */
 class GradeLetterSetCustomize extends EntityForm {
 
@@ -38,7 +38,7 @@ class GradeLetterSetCustomize extends EntityForm {
     $form['grade_letters']['links'] = array(
       '#type' => 'table',
       '#header' => array(t('Name'), t('Lowest'), t('Highest'), t('Weight'), t('Operations')),
-      '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', array(':grade-letter' => $this->url('grade_letter.link_add', array('grade_letter_set' => $this->entity->id())))),
+      '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', array(':grade-letter' => $this->url('grade_letter.letter_add', array('grade_letter_set' => $this->entity->id())))),
       '#attributes' => array('id' => 'grade_letters'),
       '#tabledrag' => array(
         array(

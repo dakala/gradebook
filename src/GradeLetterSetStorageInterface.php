@@ -18,12 +18,12 @@ interface GradeLetterSetStorageInterface extends ConfigEntityStorageInterface {
   /**
    * Assigns a user to a particular grade letter set.
    *
-   * @param \Drupal\gradebook\GradeLetterSetInterface $shortcut_set
+   * @param \Drupal\gradebook\GradeLetterSetInterface $grade_letter_set
    *   An object representing the grade letter set.
    * @param $account
    *   A user account that will be assigned to use the set.
    */
-  public function assignUser(GradeLetterSetInterface $shortcut_set, $account);
+  public function assignUser(GradeLetterSetInterface $grade_letter_set, $account);
 
   /**
    * Unassigns a user from any grade letter set they may have been assigned to.
@@ -62,13 +62,13 @@ interface GradeLetterSetStorageInterface extends ConfigEntityStorageInterface {
   /**
    * Get the number of users who have this set assigned to them.
    *
-   * @param \Drupal\gradebook\GradeLetterSetInterface $shortcut_set
+   * @param \Drupal\gradebook\GradeLetterSetInterface $grade_letter_set
    *   The shortcut to count the users assigned to.
    *
    * @return int
    *   The number of users who have this set assigned to them.
    */
-  public function countAssignedUsers(GradeLetterSetInterface $shortcut_set);
+  public function countAssignedUsers(GradeLetterSetInterface $grade_letter_set);
 
   /**
    * Gets the default grade letter set for a given user account.

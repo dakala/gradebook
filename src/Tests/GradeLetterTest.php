@@ -174,9 +174,9 @@ class GradeLetterSetsTest extends ShortcutTestBase {
   function testGradeLetterSetUnassign() {
     $new_set = $this->generateGradeLetterSet($this->randomMachineName());
 
-    $shortcut_set_storage = \Drupal::entityManager()->getStorage('grade_letter_set');
-    $shortcut_set_storage->assignUser($new_set, $this->shortcutUser);
-    $shortcut_set_storage->unassignUser($this->shortcutUser);
+    $grade_letter_set_storage = \Drupal::entityManager()->getStorage('grade_letter_set');
+    $grade_letter_set_storage->assignUser($new_set, $this->shortcutUser);
+    $grade_letter_set_storage->unassignUser($this->shortcutUser);
     $current_set = shortcut_current_displayed_set($this->shortcutUser);
     $default_set = shortcut_default_set($this->shortcutUser);
     $this->assertTrue($current_set->id() == $default_set->id(), "Successfully unassigned another user's grade letter set.");
