@@ -51,6 +51,7 @@ function gradebook_grade_valuation_info() {
 }
 
 /**
+ * Get grade valuation options as array.
  *
  * @return array
  */
