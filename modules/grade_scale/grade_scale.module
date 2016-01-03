@@ -122,3 +122,16 @@ function grade_scale_entity_base_field_info_alter(&$fields, EntityTypeInterface 
       ->setDisplayConfigurable('form', TRUE);
   }
 }
+
+/**
+ * Implements hook_grade_valuation_info().
+ */
+function grade_scale_grade_valuation_info() {
+  return [
+    'scale' => [
+      'label' => 'Scale',
+      'description' => t('The grade is a value from a pre-defined scale.'),
+      'widget_callback' => '',
+    ]
+  ];
+}
