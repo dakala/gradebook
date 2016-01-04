@@ -15,3 +15,9 @@ entity.grade_item.collection:
   description: 'Add and modify grade items.'
   route_name: entity.grade_item.collection
   parent: gradebook.admin_index
+
+#entity.grade_category.collection:
+#  title: 'Grade categories'
+#  description: 'Add and modify grade categories.'
+#  route_name: entity.grade_category.collection
+#  parent: gradebook.admin_index

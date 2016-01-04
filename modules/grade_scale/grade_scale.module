@@ -10,6 +10,8 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Render\Element;
 
+define('GRADE_ITEM_VALUATION_SCALE', 'scale');
+
 /**
  * Implements hook_help().
  */

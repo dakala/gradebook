@@ -21,3 +21,9 @@ grade_item.add:
   title: 'Add grade item'
   appears_on:
     - entity.grade_item.collection
+
+#grade_category.add:
+#  route_name: grade_category.add
+#  title: 'Add grade category'
+#  appears_on:
+#    - entity.grade_category.collection

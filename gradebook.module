@@ -9,6 +9,9 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 
+define('GRADE_ITEM_VALUATION_NUMERIC', 'numeric');
+define('GRADE_ITEM_VALUATION_STRING', 'string');
+
 /**
  * Implements hook_help().
  */

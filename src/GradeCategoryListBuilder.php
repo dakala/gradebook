@@ -14,9 +14,9 @@ use Drupal\Core\Language\LanguageInterface;
 /**
  * Defines a class to build a listing of grade scale entities.
  *
- * @see \Drupal\gradebook\Entity\GradeItem
+ * @see \Drupal\gradebook\Entity\GradeCategory
  */
-class GradeItemListBuilder extends EntityListBuilder {
+class GradeCategoryListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}

@@ -13,23 +13,20 @@ use Drupal\Core\Url;
 /**
  * Builds the shortcut link deletion form.
  */
-class GradeLetterDeleteForm extends ContentEntityDeleteForm {
+class GradeItemDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'grade_letter_confirm_delete';
+    return 'grade_item_confirm_delete';
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-//    'entity.grade_letter_set.customize_form'
-    return new Url('entity.grade_letter_set.list_form', array(
-      'grade_letter_set' => $this->entity->bundle(),
-    ));
+    return new Url('entity.grade_item.collection');
   }
 
   /**
@@ -38,5 +35,4 @@ class GradeLetterDeleteForm extends ContentEntityDeleteForm {
   protected function getRedirectUrl() {
     return $this->getCancelUrl();
   }
-
 }

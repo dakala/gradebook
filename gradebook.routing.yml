@@ -121,7 +121,48 @@ entity.grade_item.canonical:
   path: '/admin/config/gradebook/grade_item/{grade_item}'
   defaults:
     _entity_view: 'grade_item.full'
-#    _title_callback: '\Drupal\grade_item\Controller\GradeScaleViewController::title'
   requirements:
     _entity_access: 'grade_item.view'
     grade_item: \d+
+
+## grade category
+#entity.grade_category.collection:
+#  path: '/admin/config/gradebook/grade_category'
+#  defaults:
+#    _entity_list: 'grade_category'
+#    _title: 'Grade categories'
+#  requirements:
+#    _permission: 'administer grade categories'
+#
+#grade_category.add:
+#  path: '/admin/config/gradebook/grade_category/add'
+#  defaults:
+#    _entity_form: 'grade_category.add'
+#    _title: 'Add grade categories'
+#  requirements:
+#    _entity_create_access: 'grade_category'
+#
+#entity.grade_category.edit_form:
+#  path: '/admin/config/gradebook/grade_category/{grade_category}/edit'
+#  defaults:
+#    _entity_form: 'grade_category.edit'
+#    _title: 'Edit grade category'
+#  requirements:
+#    _entity_access: 'grade_category.update'
+#
+#entity.grade_category.delete_form:
+#  path: '/admin/config/gradebook/grade_category/{grade_category}/delete'
+#  defaults:
+#    _entity_form: 'grade_category.delete'
+#    _title: 'Delete grade category'
+#  requirements:
+#    _entity_access: 'grade_category.delete'
+#
+#entity.grade_category.canonical:
+#  path: '/admin/config/gradebook/grade_category/{grade_category}'
+#  defaults:
+#    _entity_view: 'grade_category.full'
+#  requirements:
+#    _entity_access: 'grade_category.view'
+#    grade_category: \d+
+    
