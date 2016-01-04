@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Grading method'
+vid: grade_method
+description: 'How a grade item is scored or marked.'
+hierarchy: 0
+weight: 0
