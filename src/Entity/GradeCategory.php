@@ -167,10 +167,66 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['source'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Online grade category'))
+    $fields['display_name'] = BaseFieldDefinition::create('float')
+      ->setLabel(t('Display name'))
+      ->setDescription(t('The label when displaying category totals.'))
+      ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'string_textfield',
+        'weight' => -12,
+        'settings' => array(
+          'size' => 60,
+        ),
+      ));
+
+    $fields['parent'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Category parent'))
+      ->setDescription(t('The parent of this category.'))
+      ->setSetting('target_type', 'grade_category')
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -15,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['grade_aggregation_type'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Aggregation type'))
+      ->setDescription(t('How to aggregate the scores for this category.'))
       ->setRevisionable(TRUE)
-      ->setDefaultValue(TRUE)
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler_settings', ['target_bundles' => ['grade_aggregation_type' => 'grade_aggregation_type']])
+      ->setDefaultValue(0)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -15,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['aggregate_graded'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Exclude empty grades when aggregating scores.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'boolean_checkbox',
         'settings' => array(
@@ -180,19 +236,45 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['grade_valuation_type'] = BaseFieldDefinition::create('list_integer')
-      ->setLabel(t('Grade valuation type'))
-      ->setDescription(t('How the category is valuated.'))
-      ->setSetting('unsigned', TRUE)
-      ->setSetting('allowed_values', gradebook_grade_valuation_options())
-      ->setDefaultValue(GRADE_ITEM_VALUATION_NUMERIC)
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'weight' => -17,
-      ))
+    $fields['keep_highest'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Keep highest grades when aggregating scores.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
-        'type' => 'options_select',
-        'weight' => -17,
+        'type' => 'boolean_checkbox',
+        'settings' => array(
+          'display_label' => TRUE,
+        ),
+        'weight' => -18,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['drop_lowest'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Drop lowest grades when aggregating scores.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'boolean_checkbox',
+        'settings' => array(
+          'display_label' => TRUE,
+        ),
+        'weight' => -18,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['override_category'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Allow category overrides when aggregating scores.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'boolean_checkbox',
+        'settings' => array(
+          'display_label' => TRUE,
+        ),
+        'weight' => -18,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -215,6 +297,18 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
           'size' => '60',
           'placeholder' => '',
         ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+
+    $fields['decimal_points'] = BaseFieldDefinition::create('list_integer')
+      ->setLabel(t('Decimal points'))
+      ->setDescription(t('The number of decimal points to show for this grade mark.'))
+      ->setSetting('unsigned', TRUE)
+      ->setSetting('allowed_values', range(0, 6))
+      ->setDisplayOptions('form', array(
+        'type' => 'options_select',
+        'weight' => -9,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -254,63 +348,6 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         ),
       ));
 
-    $fields['multiplicator'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Multiplication factor'))
-      ->setDescription(t('The grade multiplication factor.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -10,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['decimal_points'] = BaseFieldDefinition::create('list_integer')
-    ->setLabel(t('Decimal points'))
-    ->setDescription(t('The number of decimal points to show for this grade mark.'))
-    ->setSetting('unsigned', TRUE)
-    ->setSetting('allowed_values', range(0, 6))
-    ->setDisplayOptions('form', array(
-    'type' => 'options_select',
-    'weight' => -9,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
-    $fields['hidden'] = BaseFieldDefinition::create('created')
-    ->setLabel(t('Hidden until'))
-    ->setDescription(t('If set, category is hidden until this date.'))
-    ->setDefaultValue(0)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE)
-    ->setDisplayOptions('view', array(
-    'label' => 'hidden',
-    'type' => 'timestamp',
-    'weight' => 0,
-    ))
-    ->setDisplayOptions('form', array(
-    'type' => 'datetime_timestamp',
-    'weight' => -8,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
-    $fields['locked'] = BaseFieldDefinition::create('created')
-    ->setLabel(t('Locked after'))
-    ->setDescription(t('If set, category is locked after this date.'))
-    ->setDefaultValue(0)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE)
-    ->setDisplayOptions('view', array(
-    'label' => 'hidden',
-    'type' => 'timestamp',
-    'weight' => -7,
-    ))
-    ->setDisplayOptions('form', array(
-    'type' => 'datetime_timestamp',
-    'weight' => -7,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
     $fields['weight'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Weight'))
       ->setDescription(t('Weight override.'))
@@ -325,41 +362,39 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         'weight' => -6,
       ));
 
-    $fields['uid'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The username of the content author.'))
+    $fields['hidden'] = BaseFieldDefinition::create('created')
+      ->setLabel(t('Hidden until'))
+      ->setDescription(t('If set, category is hidden until this date.'))
+      ->setDefaultValue(0)
       ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
-        'type' => 'author',
+        'type' => 'timestamp',
         'weight' => 0,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
-        'weight' => -5,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ),
+        'type' => 'datetime_timestamp',
+        'weight' => -8,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['langcode'] = BaseFieldDefinition::create('language')
-      ->setLabel(t('Language'))
-      ->setDescription(t('The language code of the grade category.'))
+    $fields['locked'] = BaseFieldDefinition::create('created')
+      ->setLabel(t('Locked after'))
+      ->setDescription(t('If set, category is locked after this date.'))
+      ->setDefaultValue(0)
+      ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'type' => 'timestamp',
+        'weight' => -7,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'language_select',
-        'weight' => -4,
-      ));
-
+        'type' => 'datetime_timestamp',
+        'weight' => -7,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }
