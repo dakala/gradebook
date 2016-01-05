@@ -3,3 +3,4 @@ entity.grade_scale.collection:
   description: 'Add and modify grade scales.'
   route_name: entity.grade_scale.collection
   parent: gradebook.admin_index
+  weight: -17

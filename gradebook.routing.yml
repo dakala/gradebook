@@ -125,44 +125,85 @@ entity.grade_item.canonical:
     _entity_access: 'grade_item.view'
     grade_item: \d+
 
-## grade category
-#entity.grade_category.collection:
-#  path: '/admin/config/gradebook/grade_category'
-#  defaults:
-#    _entity_list: 'grade_category'
-#    _title: 'Grade categories'
-#  requirements:
-#    _permission: 'administer grade categories'
-#
-#grade_category.add:
-#  path: '/admin/config/gradebook/grade_category/add'
-#  defaults:
-#    _entity_form: 'grade_category.add'
-#    _title: 'Add grade categories'
-#  requirements:
-#    _entity_create_access: 'grade_category'
-#
-#entity.grade_category.edit_form:
-#  path: '/admin/config/gradebook/grade_category/{grade_category}/edit'
-#  defaults:
-#    _entity_form: 'grade_category.edit'
-#    _title: 'Edit grade category'
-#  requirements:
-#    _entity_access: 'grade_category.update'
-#
-#entity.grade_category.delete_form:
-#  path: '/admin/config/gradebook/grade_category/{grade_category}/delete'
-#  defaults:
-#    _entity_form: 'grade_category.delete'
-#    _title: 'Delete grade category'
-#  requirements:
-#    _entity_access: 'grade_category.delete'
-#
-#entity.grade_category.canonical:
-#  path: '/admin/config/gradebook/grade_category/{grade_category}'
-#  defaults:
-#    _entity_view: 'grade_category.full'
-#  requirements:
-#    _entity_access: 'grade_category.view'
-#    grade_category: \d+
+# grade category
+entity.grade_category.collection:
+  path: '/admin/config/gradebook/grade_category'
+  defaults:
+    _entity_list: 'grade_category'
+    _title: 'Grade categories'
+  requirements:
+    _permission: 'administer grade categories'
+
+grade_category.add:
+  path: '/admin/config/gradebook/grade_category/add'
+  defaults:
+    _entity_form: 'grade_category.add'
+    _title: 'Add grade categories'
+  requirements:
+    _entity_create_access: 'grade_category'
+
+entity.grade_category.edit_form:
+  path: '/admin/config/gradebook/grade_category/{grade_category}/edit'
+  defaults:
+    _entity_form: 'grade_category.edit'
+    _title: 'Edit grade category'
+  requirements:
+    _entity_access: 'grade_category.update'
+
+entity.grade_category.delete_form:
+  path: '/admin/config/gradebook/grade_category/{grade_category}/delete'
+  defaults:
+    _entity_form: 'grade_category.delete'
+    _title: 'Delete grade category'
+  requirements:
+    _entity_access: 'grade_category.delete'
+
+entity.grade_category.canonical:
+  path: '/admin/config/gradebook/grade_category/{grade_category}'
+  defaults:
+    _entity_view: 'grade_category.full'
+  requirements:
+    _entity_access: 'grade_category.view'
+    grade_category: \d+
+    
+# grade item data
+entity.grade_item_data.collection:
+  path: '/admin/config/gradebook/grade_item_data'
+  defaults:
+    _entity_list: 'grade_item_data'
+    _title: 'Grade item data'
+  requirements:
+    _permission: 'administer grade item data'
+
+grade_item_data.add:
+  path: '/admin/config/gradebook/grade_item_data/add'
+  defaults:
+    _entity_form: 'grade_item_data.add'
+    _title: 'Add grade item data'
+  requirements:
+    _entity_create_access: 'grade_item_data'
+
+entity.grade_item_data.edit_form:
+  path: '/admin/config/gradebook/grade_item_data/{grade_item_data}/edit'
+  defaults:
+    _entity_form: 'grade_item_data.edit'
+    _title: 'Edit grade item data'
+  requirements:
+    _entity_access: 'grade_item_data.update'
+
+entity.grade_item_data.delete_form:
+  path: '/admin/config/gradebook/grade_item_data/{grade_item_data}/delete'
+  defaults:
+    _entity_form: 'grade_item_data.delete'
+    _title: 'Delete grade item data'
+  requirements:
+    _entity_access: 'grade_item_data.delete'
+
+entity.grade_item_data.canonical:
+  path: '/admin/config/gradebook/grade_item_data/{grade_item_data}'
+  defaults:
+    _entity_view: 'grade_item_data.full'
+  requirements:
+    _entity_access: 'grade_item_data.view'
+    grade_item_data: \d+
     

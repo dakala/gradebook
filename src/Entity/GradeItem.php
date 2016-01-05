@@ -218,42 +218,6 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['lowest'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Lowest mark'))
-      ->setDescription(t('The lowest mark (%age) possible for this item.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -13,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['highest'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Highest mark'))
-      ->setDescription(t('The highest mark (%age) possible for this item.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -12,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['pass'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Pass mark'))
-      ->setDescription(t('The pass mark (%age) for this item.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -11,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
     $fields['multiplicator'] = BaseFieldDefinition::create('float')
       ->setLabel(t('Multiplication factor'))
       ->setDescription(t('The grade multiplication factor.'))
@@ -266,64 +230,26 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
         ),
       ));
 
-    $fields['decimal_points'] = BaseFieldDefinition::create('list_integer')
-    ->setLabel(t('Decimal points'))
-    ->setDescription(t('The number of decimal points to show for this grade mark.'))
-    ->setSetting('unsigned', TRUE)
-    ->setSetting('allowed_values', range(0, 6))
-    ->setDisplayOptions('form', array(
-    'type' => 'options_select',
-    'weight' => -9,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
-    $fields['hidden'] = BaseFieldDefinition::create('created')
-    ->setLabel(t('Hidden until'))
-    ->setDescription(t('If set, item is hidden until this date.'))
-    ->setDefaultValue(0)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE)
-    ->setDisplayOptions('view', array(
-    'label' => 'hidden',
-    'type' => 'timestamp',
-    'weight' => 0,
-    ))
-    ->setDisplayOptions('form', array(
-    'type' => 'datetime_timestamp',
-    'weight' => -8,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
-    $fields['locked'] = BaseFieldDefinition::create('created')
-    ->setLabel(t('Locked after'))
-    ->setDescription(t('If set, item is locked after this date.'))
-    ->setDefaultValue(0)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE)
-    ->setDisplayOptions('view', array(
-    'label' => 'hidden',
-    'type' => 'timestamp',
-    'weight' => -7,
-    ))
-    ->setDisplayOptions('form', array(
-    'type' => 'datetime_timestamp',
-    'weight' => -7,
-    ))
-    ->setDisplayConfigurable('form', TRUE);
-
-    $fields['weight'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Weight'))
-      ->setDescription(t('Weight override.'))
+    $fields['grade_item_data'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Grade item data'))
+      ->setDescription(t('Extra data required for aggregation of scores.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'grade_item_data')
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
-        'type' => 'integer',
-        'weight' => 6,
+        'label' => 'above',
+        'weight' => -15,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'number',
-        'weight' => -6,
-      ));
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -15,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
@@ -359,7 +285,6 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
         'type' => 'language_select',
         'weight' => -4,
       ));
-
 
     return $fields;
   }

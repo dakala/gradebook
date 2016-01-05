@@ -222,22 +222,8 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['aggregate_graded'] = BaseFieldDefinition::create('boolean')
+    $fields['exclude_empty'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Exclude empty grades when aggregating scores.'))
-      ->setRevisionable(TRUE)
-      ->setDefaultValue(FALSE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'boolean_checkbox',
-        'settings' => array(
-          'display_label' => TRUE,
-        ),
-        'weight' => -18,
-      ))
-      ->setDisplayConfigurable('form', TRUE);
-
-    $fields['keep_highest'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Keep highest grades when aggregating scores.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
       ->setDisplayConfigurable('view', TRUE)
@@ -264,6 +250,20 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
+    $fields['keep_highest'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Keep highest grades when aggregating scores.'))
+      ->setRevisionable(TRUE)
+      ->setDefaultValue(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'boolean_checkbox',
+        'settings' => array(
+          'display_label' => TRUE,
+        ),
+        'weight' => -18,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
     $fields['override_category'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Allow category overrides when aggregating scores.'))
       ->setRevisionable(TRUE)
@@ -278,12 +278,11 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['grade_display_type'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Grade display'))
-      ->setDescription(t('How to display the scores or marks e.g. Real, Letter or Percentage'))
+    $fields['grade_item_data'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Grade item data'))
+      ->setDescription(t('Extra data required for aggregation of scores.'))
       ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'taxonomy_term')
-      ->setSetting('handler_settings', ['target_bundles' => ['grade_display_type' => 'grade_display_type']])
+      ->setSetting('target_type', 'grade_item_data')
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
@@ -300,101 +299,40 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-
-    $fields['decimal_points'] = BaseFieldDefinition::create('list_integer')
-      ->setLabel(t('Decimal points'))
-      ->setDescription(t('The number of decimal points to show for this grade mark.'))
-      ->setSetting('unsigned', TRUE)
-      ->setSetting('allowed_values', range(0, 6))
-      ->setDisplayOptions('form', array(
-        'type' => 'options_select',
-        'weight' => -9,
-      ))
-      ->setDisplayConfigurable('form', TRUE);
-
-    $fields['lowest'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Lowest mark'))
-      ->setDescription(t('The lowest mark (%age) possible for this category.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -13,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['highest'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Highest mark'))
-      ->setDescription(t('The highest mark (%age) possible for this category.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -12,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['pass'] = BaseFieldDefinition::create('float')
-      ->setLabel(t('Pass mark'))
-      ->setDescription(t('The pass mark (%age) for this category.'))
-      ->setSetting('unsigned', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -11,
-        'settings' => array(
-          'size' => 10,
-        ),
-      ));
-
-    $fields['weight'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Weight'))
-      ->setDescription(t('Weight override.'))
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', array(
-        'label' => 'hidden',
-        'type' => 'integer',
-        'weight' => 6,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'number',
-        'weight' => -6,
-      ));
-
-    $fields['hidden'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Hidden until'))
-      ->setDescription(t('If set, category is hidden until this date.'))
-      ->setDefaultValue(0)
+    $fields['uid'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Authored by'))
+      ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'user')
+      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
-        'type' => 'timestamp',
+        'type' => 'author',
         'weight' => 0,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'datetime_timestamp',
-        'weight' => -8,
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -5,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['locked'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Locked after'))
-      ->setDescription(t('If set, category is locked after this date.'))
-      ->setDefaultValue(0)
-      ->setRevisionable(TRUE)
+    $fields['langcode'] = BaseFieldDefinition::create('language')
+      ->setLabel(t('Language'))
+      ->setDescription(t('The language code of the grade item.'))
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
-        'type' => 'timestamp',
-        'weight' => -7,
+        'type' => 'hidden',
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'datetime_timestamp',
-        'weight' => -7,
-      ))
-      ->setDisplayConfigurable('form', TRUE);
+        'type' => 'language_select',
+        'weight' => -4,
+      ));
 
     return $fields;
   }

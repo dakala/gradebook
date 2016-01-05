@@ -9,8 +9,20 @@ administer grade letters:
 access grade letters:
   title: 'Use grade letters'
 
+#  grade items
+administer grade items:
+  title: 'Administer grade items'
+access grade items:
+  title: 'Use grade items'
+
 #  grade categories
 administer grade categories:
   title: 'Administer grade categories'
 access grade categories:
   title: 'Use grade categories'
+
+#  grade item data
+administer grade item data:
+  title: 'Administer grade item data'
+access grade item data:
+  title: 'Use grade item data'
