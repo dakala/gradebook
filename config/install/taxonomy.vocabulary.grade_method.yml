@@ -1,8 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
-name: 'Grade source'
-vid: grade_source
-description: 'The source of a grade item'
+name: 'Grading method'
+vid: grade_method
+description: 'How a grade item is scored or marked.'
 hierarchy: 0
 weight: 0
