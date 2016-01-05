@@ -17,7 +17,7 @@ use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines a storage for grade_letter_set entities.
+ * Defines a storage for grade letter set entities.
  */
 class GradeLetterSetStorage extends ConfigEntityStorage implements GradeLetterSetStorageInterface {
 
@@ -59,75 +59,6 @@ class GradeLetterSetStorage extends ConfigEntityStorage implements GradeLetterSe
       $container->get('module_handler'),
       $container->get('language_manager')
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function deleteAssignedGradeLetterSets(GradeLetterSetInterface $entity) {
-    // First, delete any user assignments for this set, so that each of these
-    // users will go back to using whatever default set applies.
-    db_delete('grade_letter_set_users')
-      ->condition('set_name', $entity->id())
-      ->execute();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function assignUser(GradeLetterSetInterface $grade_letter_set, $account) {
-    db_merge('grade_letter_set_users')
-      ->key('uid', $account->id())
-      ->fields(array('set_name' => $grade_letter_set->id()))
-      ->execute();
-    drupal_static_reset('shortcut_current_displayed_set');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function unassignUser($account) {
-    $deleted = db_delete('grade_letter_set_users')
-      ->condition('uid', $account->id())
-      ->execute();
-    return (bool) $deleted;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getAssignedToUser($account) {
-    $query = db_select('grade_letter_set_users', 'ssu');
-    $query->fields('ssu', array('set_name'));
-    $query->condition('ssu.uid', $account->id());
-    return $query->execute()->fetchField();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function countAssignedUsers(GradeLetterSetInterface $grade_letter_set) {
-    return db_query('SELECT COUNT(*) FROM {grade_letter_set_users} WHERE set_name = :name', array(':name' => $grade_letter_set->id()))->fetchField();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultSet(AccountInterface $account) {
-    // Allow modules to return a default grade letter set name. Since we can only
-    // have one, we allow the last module which returns a valid result to take
-    // precedence. If no module returns a valid set, fall back on the site-wide
-    // default, which is the lowest-numbered grade letter set.
-    $suggestions = array_reverse($this->moduleHandler->invokeAll('shortcut_default_set', array($account)));
-    $suggestions[] = 'default';
-    $grade_letter_set = NULL;
-    foreach ($suggestions as $name) {
-      if ($grade_letter_set = $this->load($name)) {
-        break;
-      }
-    }
-
-    return $grade_letter_set;
   }
 
 }

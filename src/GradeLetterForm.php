@@ -11,7 +11,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for the shortcut entity forms.
+ * Form controller for the grade letter forms.
  */
 class GradeLetterForm extends ContentEntityForm {
 
@@ -30,7 +30,7 @@ class GradeLetterForm extends ContentEntityForm {
     $status = $entity->save();
 
     if ($status == SAVED_UPDATED) {
-      $message = $this->t('The grade letter %grade-letter has been updated.', array('%grade-letter' => $entity->getTitle()));
+      $message = $this->t('The grade letter %grade_letter has been updated.', array('%grade_letter' => $entity->getTitle()));
     }
     else {
       $message = $this->t('Added a grade letter for %title.', array('%title' => $entity->getTitle()));

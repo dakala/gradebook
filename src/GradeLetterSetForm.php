@@ -59,7 +59,7 @@ class GradeLetterSetForm extends BundleEntityFormBase {
       drupal_set_message(t('The %set_name grade letter set has been created. You can edit it from this page.', array('%set_name' => $entity->label())));
     }
     else {
-      drupal_set_message(t('Updated set name to %set-name.', array('%set-name' => $entity->label())));
+      drupal_set_message(t('Updated set name to %set_name.', array('%set_name' => $entity->label())));
     }
     $form_state->setRedirectUrl($this->entity->urlInfo('list-form'));
   }

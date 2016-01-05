@@ -25,10 +25,10 @@ class GradeLetterSetAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'update':
-        return AccessResult::allowedIf($account->hasPermission('administer grade letters'))->cachePerPermissions()->cacheUntilEntityChanges($entity);
+        return AccessResult::allowedIf($account->hasPermission('administer grade letter sets'))->cachePerPermissions()->cacheUntilEntityChanges($entity);
 
       case 'delete':
-        return AccessResult::allowedIf($account->hasPermission('administer grade letters') && $entity->id() != 'default')->cachePerPermissions();
+        return AccessResult::allowedIf($account->hasPermission('administer grade letter sets') && $entity->id() != 'default')->cachePerPermissions();
 
       default:
         // No opinion.
@@ -40,7 +40,7 @@ class GradeLetterSetAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'administer grade letters');
+    return AccessResult::allowedIfHasPermission($account, 'administer grade letter sets');
   }
 
 }
