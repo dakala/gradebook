@@ -249,33 +249,4 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
     return $fields;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheTagsToInvalidate() {
-    return $this->grade_letter_set->entity->getCacheTags();
-  }
-
-  /**
-   * Sort shortcut objects.
-   *
-   * Callback for uasort().
-   *
-   * @param \Drupal\gradebook\GradeLetterInterface $a
-   *   First item for comparison.
-   * @param \Drupal\gradebook\GradeLetterInterface $b
-   *   Second item for comparison.
-   *
-   * @return int
-   *   The comparison result for uasort().
-   */
-  public static function sort(GradeLetterInterface $a, GradeLetterInterface $b) {
-    $a_weight = $a->getWeight();
-    $b_weight = $b->getWeight();
-    if ($a_weight == $b_weight) {
-      return strnatcasecmp($a->getTitle(), $b->getTitle());
-    }
-    return ($a_weight < $b_weight) ? -1 : 1;
-  }
-
 }
