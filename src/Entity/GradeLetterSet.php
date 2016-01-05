@@ -67,9 +67,9 @@ class GradeLetterSet extends ConfigEntityBundleBase implements GradeLetterSetInt
    * {@inheritdoc}
    */
   public function getGradeLetters() {
-    $shortcuts = \Drupal::entityManager()->getStorage('grade_letter')->loadByProperties(array('grade_letter_set' => $this->id()));
-    uasort($shortcuts, array('\Drupal\gradebook\Entity\GradeLetter', 'sort'));
-    return $shortcuts;
+    $grade_letters = \Drupal::entityManager()->getStorage('grade_letter')->loadByProperties(array('grade_letter_set' => $this->id()));
+    uasort($grade_letters, array('\Drupal\gradebook\Entity\GradeLetter', 'sort'));
+    return $grade_letters;
   }
 
 }
