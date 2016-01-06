@@ -70,6 +70,21 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
   /**
    * {@inheritdoc}
    */
+  public function getDisplayName() {
+    return $this->get('display_name')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setDisplayName($display_name) {
+    $this->set('display_name', $display_name);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getDescription() {
     return $this->get('description')->value;
   }
@@ -85,15 +100,52 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
   /**
    * {@inheritdoc}
    */
-  public function getLowest() {
-    return $this->get('lowest')->value;
+  public function getDropLowest() {
+    return $this->get('drop_lowest')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setLowest($lowest) {
-    $this->set('lowest', $lowest);
+  public function setDropLowest($drop_lowest) {
+    $this->set('drop_lowest', $drop_lowest);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExcludeEmpty() {
+    return $this->get('exclude_empty')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setExcludeEmpty($exclude_empty) {
+    $this->set('exclude_empty', $exclude_empty);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeAggregationType() {
+    return $this->get('grade_aggregation_type')->getEntity()->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeAggregationTypeId() {
+    return $this->get('grade_aggregation_type')->getEntity()->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setGradeAggregationType($grade_aggregation_type) {
+    $this->set('grade_aggregation_type', $grade_aggregation_type);
     return $this;
   }
 
@@ -167,17 +219,24 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['display_name'] = BaseFieldDefinition::create('float')
+    $fields['display_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Display name'))
       ->setDescription(t('The label when displaying category totals.'))
-      ->setSetting('unsigned', TRUE)
+      ->setSetting('max_length', 20)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'text_default',
+        'weight' => 0,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -12,
         'settings' => array(
           'size' => 60,
         ),
-      ));
+      ))
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['parent'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Category parent'))
@@ -236,31 +295,17 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['drop_lowest'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Drop lowest grades when aggregating scores.'))
+    $fields['drop_lowest'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Drop lowest number of grades entered when aggregating scores.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
-        'type' => 'boolean_checkbox',
+        'type' => 'string_textfield',
+        'weight' => -12,
         'settings' => array(
-          'display_label' => TRUE,
+          'size' => 10,
         ),
-        'weight' => -18,
-      ))
-      ->setDisplayConfigurable('form', TRUE);
-
-    $fields['keep_highest'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Keep highest grades when aggregating scores.'))
-      ->setRevisionable(TRUE)
-      ->setDefaultValue(FALSE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayOptions('form', array(
-        'type' => 'boolean_checkbox',
-        'settings' => array(
-          'display_label' => TRUE,
-        ),
-        'weight' => -18,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
