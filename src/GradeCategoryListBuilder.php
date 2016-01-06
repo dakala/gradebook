@@ -22,8 +22,14 @@ class GradeCategoryListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
+    // @todo: add responsive priority
     $header['name'] = t('Name');
-//    $header['scales'] = t('Scales');
+    $header['display_name'] = t('Display name');
+    $header['grade_aggregation_type'] = t('Aggregation type');
+    $header['exclude_empty'] = t('Exclude empty');
+    $header['drop_lowest'] = t('Drop lowest items');
+    $header['author'] = t('Author');
+
     return $header + parent::buildHeader();
   }
 
@@ -60,11 +66,14 @@ class GradeCategoryListBuilder extends EntityListBuilder {
       '#title' => $entity->label(),
       '#url' => $uri,
     );
-
-//    $row['scales']['data'] = array(
-//      '#type' => 'markup',
-//      '#markup' => implode(', ', $entity->getScales()),
-//    );
+    $row['display_name'] = $entity->getDisplayName();
+    $row['grade_aggregation_type'] = $entity->getGradeAggregationType();
+    $row['exclude_empty'] = $entity->getExcludeEmpty() ? t('Yes') : t('No');
+    $row['drop_lowest'] = $entity->getDropLowest();
+    $row['author']['data'] = array(
+      '#theme' => 'username',
+      '#account' => $entity->getOwner(),
+    );
 
     return $row + parent::buildRow($entity);
   }
