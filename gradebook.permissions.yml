@@ -26,3 +26,9 @@ administer grade item data:
   title: 'Administer grade item data'
 access grade item data:
   title: 'Use grade item data'
+  
+#  grade scores
+administer grade scores:
+  title: 'Administer grade scores'
+access grade scores:
+  title: 'Use grade scores'
