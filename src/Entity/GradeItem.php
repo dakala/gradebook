@@ -261,6 +261,29 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayConfigurable('form', TRUE);
 
+    // @todo:
+    $fields['activity_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Activity ID'))
+      ->setDescription(t('The activity that is being graded. e.g. Assignment, Attendance, Quiz etc.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'node')
+      ->setSetting('handler_settings', ['target_bundles' => gradebook_activity_options()])
+      ->setDefaultValue(0)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -15,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
     $fields['grade_valuation_type'] = BaseFieldDefinition::create('list_integer')
       ->setLabel(t('Grade valuation type'))
       ->setDescription(t('How the item is valuated.'))
