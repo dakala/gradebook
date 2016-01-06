@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\grade_item\GradeItemSetForm.
+ * Contains \Drupal\gradebook\GradeItemSetForm.
  */
 
 namespace Drupal\gradebook;
