@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\gradebook\Entity\GradeitemData.
+ * Contains \Drupal\gradebook\Entity\GradeItemData.
  */
 
 namespace Drupal\gradebook\Entity;
@@ -12,7 +12,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\gradebook\GradeitemDataInterface;
+use Drupal\gradebook\GradeItemDataInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -22,13 +22,13 @@ use Drupal\user\UserInterface;
  *   id = "grade_item_data",
  *   label = @Translation("Grade item data"),
  *   handlers = {
- *     "access" = "Drupal\gradebook\GradeitemDataAccessControlHandler",
- *     "list_builder" = "Drupal\gradebook\GradeitemDataListBuilder",
+ *     "access" = "Drupal\gradebook\GradeItemDataAccessControlHandler",
+ *     "list_builder" = "Drupal\gradebook\GradeItemDataListBuilder",
  *     "form" = {
- *       "default" = "Drupal\gradebook\GradeitemDataForm",
- *       "add" = "Drupal\gradebook\GradeitemDataForm",
- *       "edit" = "Drupal\gradebook\GradeitemDataForm",
- *       "delete" = "Drupal\gradebook\Form\GradeitemDataDeleteForm"
+ *       "default" = "Drupal\gradebook\GradeItemDataForm",
+ *       "add" = "Drupal\gradebook\GradeItemDataForm",
+ *       "edit" = "Drupal\gradebook\GradeItemDataForm",
+ *       "delete" = "Drupal\gradebook\Form\GradeItemDataDeleteForm"
  *     },
  *     "translation" = "Drupal\content_translation\ContentTranslationHandler"
  *   },
@@ -50,7 +50,7 @@ use Drupal\user\UserInterface;
  *   list_cache_tags = { "config:grade_item_data_list" }
  * )
  */
-class GradeitemData extends ContentEntityBase implements GradeitemDataInterface {
+class GradeItemData extends ContentEntityBase implements GradeItemDataInterface {
 
   /**
    * {@inheritdoc}
