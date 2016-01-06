@@ -100,6 +100,96 @@ class GradeitemData extends ContentEntityBase implements GradeitemDataInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHighest() {
+    return $this->get('highest')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHighest($highest) {
+    $this->set('highest', $highest);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDecimalPoints() {
+    return $this->get('decimal_points')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setDecimalPoints($decimal_points) {
+    $this->set('decimal_points', $decimal_points);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPass() {
+    return $this->get('pass')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPass($pass) {
+    $this->set('pass', $pass);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getHidden() {
+    return $this->get('hidden')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHidden($hidden) {
+    $this->set('hidden', $hidden);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLocked() {
+    return $this->get('locked')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLocked($locked) {
+    $this->set('locked', $locked);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getWeight() {
+    return $this->get('weight')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setWeight($weight) {
+    $this->set('weight', $weight);
+    return $this;
+  }
+  
+  /**
+   * {@inheritdoc}
+   */
   public function getOwner() {
     return $this->get('uid')->entity;
   }

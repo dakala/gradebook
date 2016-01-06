@@ -23,7 +23,11 @@ class GradeItemDataListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['name'] = t('Name');
-//    $header['scales'] = t('Scales');
+    $header['lowest'] = t('Lowest');
+    $header['highest'] = t('Highest');
+    $header['pass'] = t('Pass');
+    $header['hidden'] = t('Hidden');
+    $header['locked'] = t('Locked');
     return $header + parent::buildHeader();
   }
 
@@ -61,10 +65,11 @@ class GradeItemDataListBuilder extends EntityListBuilder {
       '#url' => $uri,
     );
 
-//    $row['scales']['data'] = array(
-//      '#type' => 'markup',
-//      '#markup' => implode(', ', $entity->getScales()),
-//    );
+    $row['lowest']['data'] = $entity->getLowest();
+    $row['highest']['data'] = $entity->getHighest();
+    $row['pass']['data'] = $entity->getPass();
+    $row['hidden']['data'] = $entity->getHidden();
+    $row['locked']['data'] = $entity->getLocked();
 
     return $row + parent::buildRow($entity);
   }
