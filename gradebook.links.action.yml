@@ -22,8 +22,14 @@ grade_item.add:
   appears_on:
     - entity.grade_item.collection
 
-#grade_category.add:
-#  route_name: grade_category.add
-#  title: 'Add grade category'
-#  appears_on:
-#    - entity.grade_category.collection
+grade_item_data.add:
+  route_name: grade_item_data.add
+  title: 'Add grade item data'
+  appears_on:
+    - entity.grade_item_data.collection
+
+grade_category.add:
+  route_name: grade_category.add
+  title: 'Add grade category'
+  appears_on:
+    - entity.grade_category.collection
