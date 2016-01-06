@@ -8,6 +8,7 @@
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
 
 define('GRADE_ITEM_VALUATION_NUMERIC', 'numeric');
 define('GRADE_ITEM_VALUATION_STRING', 'string');
@@ -62,6 +63,7 @@ function gradebook_grade_valuation_info() {
  * @see sug_form_node_type_form_submit().
  */
 function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
+  // @todo: attach behaviour
   $form['gradebook'] = array(
     '#type' => 'details',
     '#title' => t('Gradebook'),
@@ -71,7 +73,7 @@ function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_st
   $form['gradebook']['gradebook_node_type'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable grading.'),
-    '#default_value' => isGradebookEnabled($form_state->getFormObject()->getEntity()->id()),
+    '#default_value' => \Drupal::service('group.manager')->isGradebookEnabled($form_state->getFormObject()->getEntity()->id()),
     '#description' => t('Content will be included in relevant Gradebook actions.'),
   );
 
@@ -85,41 +87,4 @@ function gradebook_form_node_type_form_submit($form, FormStateInterface $form_st
   \Drupal::configFactory()->getEditable('gradebook.settings')->set(
     'gradebook_entity.' . $form_state->getFormObject()->getEntity()->id(),
     $form_state->getValue('gradebook_node_type'))->save();
-}
-
-/**
- * Get grade valuation options as array.
- *
- * @return array
- */
-function gradebook_grade_valuation_options() {
-  $options = [];
-  $valuations = \Drupal::moduleHandler()->invokeAll('grade_valuation_info');
-  foreach ($valuations as $key => $valuation) {
-    $options[$key] = $valuation['label'];
-  }
-  asort($options);
-  return $options;
-}
-
-/**
- * Get array of gradebook-enabled bundles.
- *
- * @return array
- */
-function gradebook_activity_options() {
-  $activities = [];
-
-  return $activities;
-}
-
-function getGradebookEntities() {
-  $entities = $this->configFactory->get('gradebook.settings')->get('gradebook_entity');
-  array_filter($entities);
-  return $entities;
-}
-
-function isGradebookEnabled($entity) {
-  $entities = getGradebookEntities();
-  return count($entities) ? in_array($entity, $entities) : FALSE;
 }
