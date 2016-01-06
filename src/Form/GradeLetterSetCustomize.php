@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
 /**
- * Builds the grade letter set list form.
+ * Builds the grade letter set customize form.
  */
 class GradeLetterSetCustomize extends EntityForm {
 

@@ -11,7 +11,7 @@ use Drupal\Core\Entity\ContentEntityDeleteForm;
 use Drupal\Core\Url;
 
 /**
- * Builds the shortcut link deletion form.
+ * Builds the grade letter deletion form.
  */
 class GradeLetterDeleteForm extends ContentEntityDeleteForm {
 
