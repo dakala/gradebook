@@ -85,18 +85,99 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
   /**
    * {@inheritdoc}
    */
-  public function getLowest() {
-    return $this->get('lowest')->value;
+  public function getSource() {
+    return $this->get('source')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setLowest($lowest) {
-    $this->set('lowest', $lowest);
+  public function setSource($source) {
+    $this->set('source', $source);
     return $this;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeValuationType() {
+    return $this->get('grade_valuation_type')->getEntity()->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeValuationTypeId() {
+    return $this->get('grade_valuation_type')->getEntity()->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setGradeValuationType($grade_valuation_type) {
+    $this->set('grade_valuation_type', $grade_valuation_type);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeDisplayType() {
+    return $this->get('grade_display_type')->getEntity()->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeDisplayTypeId() {
+    return $this->get('grade_display_type')->getEntity()->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setGradeDisplayType($grade_display_type) {
+    $this->set('grade_display_type', $grade_display_type);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeItemData() {
+    return $this->get('grade_item_data')->getEntity()->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGradeItemDataId() {
+    return $this->get('grade_item_data')->getEntity()->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setGradeItemData($grade_item_data) {
+    $this->set('grade_item_data', $grade_item_data);
+    return $this;
+  }
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function getMultiplicator() {
+    return $this->get('multiplicator')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setMultiplicator($multiplicator) {
+    $this->set('multiplicator', $multiplicator);
+    return $this;
+  }
+  
   /**
    * {@inheritdoc}
    */

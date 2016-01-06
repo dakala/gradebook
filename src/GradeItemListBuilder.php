@@ -23,7 +23,10 @@ class GradeItemListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['name'] = t('Name');
-//    $header['scales'] = t('Scales');
+    $header['source'] = t('Source');
+    $header['grade_valuation_type'] = t('Valuation type');
+    $header['grade_display_type'] = t('Display type');
+    $header['multiplicator'] = t('Multiplicator');
     return $header + parent::buildHeader();
   }
 
@@ -61,10 +64,10 @@ class GradeItemListBuilder extends EntityListBuilder {
       '#url' => $uri,
     );
 
-//    $row['scales']['data'] = array(
-//      '#type' => 'markup',
-//      '#markup' => implode(', ', $entity->getScales()),
-//    );
+    $row['source']['data'] = $entity->getSource() ? t('online') : t('offline');
+    $row['grade_valuation_type']['data'] = $entity->getGradeValuationType();
+    $row['grade_display_type']['data'] = $entity->getGradeDisplayType();
+    $row['multiplicator']['data'] = $entity->getMultiplicator();
 
     return $row + parent::buildRow($entity);
   }
