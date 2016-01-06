@@ -72,4 +72,11 @@ class GradeLetterSet extends ConfigEntityBundleBase implements GradeLetterSetInt
     return $grade_letters;
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function getTotalGradeLetters() {
+    return count($this->getGradeLetters());
+  }
+
 }

@@ -22,6 +22,7 @@ class GradeLetterSetListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['name'] = t('Name');
+    $header['total_letters'] = t('Total letters');
     return $header + parent::buildHeader();
   }
 
@@ -48,6 +49,7 @@ class GradeLetterSetListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['name'] = $entity->label();
+    $row['total_letters']['data'] = $entity->getTotalGradeLetters();
     return $row + parent::buildRow($entity);
   }
 
