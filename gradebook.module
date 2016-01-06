@@ -73,7 +73,7 @@ function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_st
   $form['gradebook']['gradebook_node_type'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable grading.'),
-    '#default_value' => \Drupal::service('group.manager')->isGradebookEnabled($form_state->getFormObject()->getEntity()->id()),
+    '#default_value' => \Drupal::service('gradebook.manager')->isGradebookEnabled($form_state->getFormObject()->getEntity()->id()),
     '#description' => t('Content will be included in relevant Gradebook actions.'),
   );
 
