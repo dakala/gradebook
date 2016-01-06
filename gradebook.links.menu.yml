@@ -4,6 +4,13 @@ gradebook.admin_index:
   parent: system.admin_config
   description: 'Administer the suite of gradebook modules.'
 
+entity.grade_score.collection:
+  title: 'Grade scores'
+  description: 'List and grade scores.'
+  route_name: entity.grade_score.collection
+  parent: gradebook.admin_index
+  weight: -20
+
 entity.grade_item.collection:
   title: 'Grade items'
   description: 'Add and modify grade items.'

@@ -206,4 +206,44 @@ entity.grade_item_data.canonical:
   requirements:
     _entity_access: 'grade_item_data.view'
     grade_item_data: \d+
-    
+ 
+# grade score
+entity.grade_score.collection:
+  path: '/admin/config/gradebook/grade_score'
+  defaults:
+    _entity_list: 'grade_score'
+    _title: 'Grade scores'
+  requirements:
+    _permission: 'administer grade scores'
+
+grade_score.add:
+  path: '/admin/config/gradebook/grade_score/add'
+  defaults:
+    _entity_form: 'grade_score.add'
+    _title: 'Add grade scores'
+  requirements:
+    _entity_create_access: 'grade_score'
+
+entity.grade_score.edit_form:
+  path: '/admin/config/gradebook/grade_score/{grade_score}/edit'
+  defaults:
+    _entity_form: 'grade_score.edit'
+    _title: 'Edit grade score'
+  requirements:
+    _entity_access: 'grade_score.update'
+
+entity.grade_score.delete_form:
+  path: '/admin/config/gradebook/grade_score/{grade_score}/delete'
+  defaults:
+    _entity_form: 'grade_score.delete'
+    _title: 'Delete grade score'
+  requirements:
+    _entity_access: 'grade_score.delete'
+
+entity.grade_score.canonical:
+  path: '/admin/config/gradebook/grade_score/{grade_score}'
+  defaults:
+    _entity_view: 'grade_score.full'
+  requirements:
+    _entity_access: 'grade_score.view'
+    grade_score: \d+
