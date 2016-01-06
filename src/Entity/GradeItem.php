@@ -267,7 +267,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setDescription(t('The activity that is being graded. e.g. Assignment, Attendance, Quiz etc.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'node')
-      ->setSetting('handler_settings', ['target_bundles' => gradebook_activity_options()])
+      ->setSetting('handler_settings', ['target_bundles' => \Drupal::service('group.manager')->getGradebookActivityOptions()])
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
@@ -288,7 +288,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setLabel(t('Grade valuation type'))
       ->setDescription(t('How the item is valuated.'))
       ->setSetting('unsigned', TRUE)
-      ->setSetting('allowed_values', gradebook_grade_valuation_options())
+      ->setSetting('allowed_values', \Drupal::service('group.manager')->getGradebookGradeValuationOptions())
       ->setDefaultValue(GRADE_ITEM_VALUATION_NUMERIC)
       ->setDisplayOptions('view', array(
         'label' => 'above',
