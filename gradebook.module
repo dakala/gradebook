@@ -60,7 +60,7 @@ function gradebook_grade_valuation_info() {
  * Adds group options to the node type form.
  *
  * @see NodeTypeForm::form().
- * @see sug_form_node_type_form_submit().
+ * @see gradebook_form_node_type_form_submit().
  */
 function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
   // @todo: attach behaviour
@@ -77,7 +77,7 @@ function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_st
     '#description' => t('Content will be included in relevant Gradebook actions.'),
   );
 
-  $form['#submit'][] = 'gradebook_form_node_type_form_submit';
+  $form['actions']['submit']['#submit'][] = 'gradebook_form_node_type_form_submit';
 }
 
 /**

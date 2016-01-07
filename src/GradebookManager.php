@@ -91,10 +91,7 @@ class GradebookManager implements GradebookManagerInterface {
    */
   public function getGradebookEnabledEntities() {
     $entities = \Drupal::config('gradebook.settings')->get('gradebook_entity');
-//  kint(\Drupal::config('gradebook.settings')->get());
-    array_filter($entities);
-//  kint($entities);
-    return $entities;
+    return array_filter($entities);
   }
 
   /**
