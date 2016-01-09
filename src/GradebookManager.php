@@ -80,7 +80,7 @@ class GradebookManager implements GradebookManagerInterface {
    */
   public function getGradebookActivityOptions() {
     $entities = $this->getGradebookEnabledEntities();
-    if ($entities) {
+    if (!empty($entities)) {
       $entities = array_combine($entities, $entities);
     }
     return $entities;
@@ -91,7 +91,7 @@ class GradebookManager implements GradebookManagerInterface {
    */
   public function getGradebookEnabledEntities() {
     $entities = \Drupal::config('gradebook.settings')->get('gradebook_entity');
-    return array_filter($entities);
+    return (!empty($entities)) ? array_filter($entities) : $entities;
   }
 
   /**
