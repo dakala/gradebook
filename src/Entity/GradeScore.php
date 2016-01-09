@@ -39,6 +39,7 @@ use Drupal\user\UserInterface;
  *     "id" = "id",
  *     "label" = "title",
  *     "langcode" = "langcode",
+ *     "user_id" = "user_id",
  *     "uid" = "uid",
  *   },
  *   links = {
@@ -70,75 +71,85 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
   /**
    * {@inheritdoc}
    */
-  public function getDescription() {
-    return $this->get('description')->value;
+  public function getFeedback() {
+    return $this->get('feedback')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setDescription($description) {
-    $this->set('description', $description);
+  public function setFeedback($feedback) {
+    $this->set('feedback', $feedback);
+    return $this;
+  }
+
+  public function getActivity() {
+    return $this->get('activity')->entity;
+  }
+
+  public function getActivityId() {
+    return $this->get('activity')->entity->id();
+  }
+
+  public function getActivityType() {
+    return $this->get('activity_type')->value;
+  }
+
+  public function setActivityType($activity_type) {
+    $this->set('activity_type', $activity_type);
+    return $this;
+  }
+
+  public function getGradeItem() {
+    return $this->get('grade_item')->entity;
+  }
+
+  public function getGradeItemId() {
+    return $this->get('grade_item')->entity->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getScore() {
+    return $this->get('score')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setScore($score) {
+    $this->set('score', $score);
     return $this;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getLowest() {
-    return $this->get('lowest')->value;
+  public function getExcluded() {
+    return $this->get('excluded')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setLowest($lowest) {
-    $this->set('lowest', $lowest);
+  public function setExcluded($excluded) {
+    $this->set('excluded', $excluded);
     return $this;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getHighest() {
-    return $this->get('highest')->value;
+  public function getOverridden() {
+    return $this->get('overridden')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setHighest($highest) {
-    $this->set('highest', $highest);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDecimalPoints() {
-    return $this->get('decimal_points')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDecimalPoints($decimal_points) {
-    $this->set('decimal_points', $decimal_points);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPass() {
-    return $this->get('pass')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setPass($pass) {
-    $this->set('pass', $pass);
+  public function setOverridden($overridden) {
+    $this->set('overridden', $overridden);
     return $this;
   }
 
@@ -190,6 +201,36 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
   /**
    * {@inheritdoc}
    */
+  public function getScoreOwner() {
+    return $this->get('user_id')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getScoreOwnerId() {
+    return $this->getEntityKey('user_id');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setScoreOwnerId($user_id) {
+    $this->set('user_id', $user_id);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setScoreOwner(UserInterface $account) {
+    $this->set('user_id', $account->id());
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getOwner() {
     return $this->get('uid')->entity;
   }
@@ -216,7 +257,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
     $this->set('uid', $account->id());
     return $this;
   }
-
+  
   /**
    * {@inheritdoc}
    */
@@ -279,6 +320,32 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
         ),
       ))
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['activity'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Activity'))
+      ->setDescription(t('The activity that is being graded. e.g. Assignment, Attendance, Quiz etc.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'node')
+      ->setSetting('handler_settings', ['target_bundles' => \Drupal::service('gradebook.manager')->getGradebookActivityOptions()])
+      ->setDefaultValue(0)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -15,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['activity_type'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Activity type'))
+      ->setDescription(t('Type of activity scored.'));
 
     $fields['grade_item'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Grade item'))
@@ -348,10 +415,10 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['hidden'] = BaseFieldDefinition::create('created')
+    $fields['hidden'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Hidden until'))
       ->setDescription(t('If set, item is hidden until this date.'))
-      ->setDefaultValue(0)
+      ->setDefaultValue([])
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
@@ -365,10 +432,10 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['locked'] = BaseFieldDefinition::create('created')
+    $fields['locked'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Locked after'))
       ->setDescription(t('If set, item is locked after this date.'))
-      ->setDefaultValue(0)
+      ->setDefaultValue([])
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
@@ -433,4 +500,14 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
 
     return $fields;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    $this->setActivityType($this->getActivity()->bundle());
+  }
+
 }
