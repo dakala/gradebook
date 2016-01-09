@@ -304,10 +304,10 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['hidden'] = BaseFieldDefinition::create('created')
+    $fields['hidden'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Hidden until'))
       ->setDescription(t('If set, item is hidden until this date.'))
-      ->setDefaultValue(0)
+      ->setDefaultValue([])
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
@@ -321,10 +321,10 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['locked'] = BaseFieldDefinition::create('created')
+    $fields['locked'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Locked after'))
       ->setDescription(t('If set, item is locked after this date.'))
-      ->setDefaultValue(0)
+      ->setDefaultValue([])
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
