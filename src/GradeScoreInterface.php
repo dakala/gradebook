@@ -19,25 +19,10 @@ interface GradeScoreInterface extends ContentEntityInterface, EntityOwnerInterfa
 
   public function setTitle($title);
 
-  public function getDescription();
+  public function getFeedback();
 
-  public function setDescription($description);
+  public function setFeedback($feedback);
 
-  public function getLowest();
-
-  public function setLowest($lowest);
-
-  public function getHighest();
-
-  public function setHighest($highest);
-
-  public function getDecimalPoints();
-
-  public function setDecimalPoints($decimal_points);
-
-  public function getPass();
-
-  public function setPass($pass);
 
   public function getHidden();
 
