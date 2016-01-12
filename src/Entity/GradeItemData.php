@@ -263,7 +263,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -13,
+        'weight' => -18,
         'settings' => array(
           'size' => 10,
         ),
@@ -275,7 +275,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -12,
+        'weight' => -17,
         'settings' => array(
           'size' => 10,
         ),
@@ -287,7 +287,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -11,
+        'weight' => -16,
         'settings' => array(
           'size' => 10,
         ),
@@ -300,7 +300,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setSetting('allowed_values', range(0, 6))
       ->setDisplayOptions('form', array(
         'type' => 'options_select',
-        'weight' => -9,
+        'weight' => -15,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -313,11 +313,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'timestamp',
-        'weight' => 0,
+        'weight' => -14,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
-        'weight' => -8,
+        'weight' => -14,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -330,11 +330,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'timestamp',
-        'weight' => -7,
+        'weight' => -13,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
-        'weight' => -7,
+        'weight' => -13,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -345,11 +345,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'integer',
-        'weight' => 6,
+        'weight' => -12,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'number',
-        'weight' => -6,
+        'weight' => -12,
       ));
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
@@ -366,7 +366,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -5,
+        'weight' => 0,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -384,7 +384,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
-        'weight' => -4,
+        'weight' => 0,
       ));
 
     return $fields;

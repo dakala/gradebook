@@ -231,7 +231,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -12,
+        'weight' => -18,
         'settings' => array(
           'size' => 60,
         ),
@@ -244,12 +244,12 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setSetting('target_type', 'grade_category')
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -17,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -17,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -268,11 +268,11 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -16,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -16,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -291,7 +291,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         'settings' => array(
           'display_label' => TRUE,
         ),
-        'weight' => -18,
+        'weight' => -15,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -302,7 +302,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -12,
+        'weight' => -14,
         'settings' => array(
           'size' => 10,
         ),
@@ -319,7 +319,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         'settings' => array(
           'display_label' => TRUE,
         ),
-        'weight' => -18,
+        'weight' => -13,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -331,11 +331,11 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -12,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -12,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -376,7 +376,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
-        'weight' => -4,
+        'weight' => 0,
       ));
 
     return $fields;

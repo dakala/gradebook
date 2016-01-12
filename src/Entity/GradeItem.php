@@ -239,12 +239,34 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => -19,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'text_textfield',
         'weight' => -19,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+
+    $fields['grade_item_data'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Grade item data'))
+      ->setDescription(t('Extra data required for aggregation of scores.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'grade_item_data')
+      ->setDefaultValue(0)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -19,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -19,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ),
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -286,11 +308,11 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -16,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -16,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -305,32 +327,11 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -10,
+        'weight' => -15,
         'settings' => array(
           'size' => 10,
         ),
       ));
-
-    $fields['grade_item_data'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Grade item data'))
-      ->setDescription(t('Extra data required for aggregation of scores.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'grade_item_data')
-      ->setDefaultValue(0)
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'weight' => -15,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ),
-      ))
-      ->setDisplayConfigurable('form', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
@@ -346,7 +347,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -5,
+        'weight' => 0,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -364,7 +365,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
-        'weight' => -4,
+        'weight' => 0,
       ));
 
     return $fields;

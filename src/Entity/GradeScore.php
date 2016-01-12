@@ -289,7 +289,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => -19,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
@@ -308,11 +308,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'author',
-        'weight' => 0,
+        'weight' => 18,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -5,
+        'weight' => -18,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -330,11 +330,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -17,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -17,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -354,11 +354,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
         'label' => 'above',
-        'weight' => -15,
+        'weight' => -16,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -15,
+        'weight' => -16,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -373,7 +373,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
-        'weight' => -12,
+        'weight' => -15,
         'settings' => array(
           'size' => 10,
         ),
@@ -382,7 +382,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'timestamp',
-        'weight' => 0,
+        'weight' => 15,
       ))
       ->setDisplayConfigurable('view', TRUE);
 
@@ -397,7 +397,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
         'settings' => array(
           'display_label' => TRUE,
         ),
-        'weight' => -18,
+        'weight' => -14,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -411,7 +411,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
         'settings' => array(
           'display_label' => TRUE,
         ),
-        'weight' => -18,
+        'weight' => -13,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -424,11 +424,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'timestamp',
-        'weight' => 0,
+        'weight' => -12,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
-        'weight' => -8,
+        'weight' => -12,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -441,11 +441,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'timestamp',
-        'weight' => -7,
+        'weight' => -11,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
-        'weight' => -7,
+        'weight' => -11,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -456,11 +456,11 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
         'type' => 'integer',
-        'weight' => 6,
+        'weight' => -10,
       ))
       ->setDisplayOptions('form', array(
         'type' => 'number',
-        'weight' => -6,
+        'weight' => -10,
       ));
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
@@ -477,7 +477,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ))
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
-        'weight' => -5,
+        'weight' => 0,
         'settings' => array(
           'match_operator' => 'CONTAINS',
           'size' => '60',
@@ -495,7 +495,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
-        'weight' => -4,
+        'weight' => 0,
       ));
 
     return $fields;
