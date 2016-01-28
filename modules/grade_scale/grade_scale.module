@@ -10,7 +10,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Render\Element;
 
-define('GRADE_ITEM_VALUATION_SCALE', 'scale');
+const GRADE_ITEM_VALUATION_SCALE = 'scale';
 
 /**
  * Implements hook_help().
@@ -23,9 +23,7 @@ function grade_scale_help($route_name, RouteMatchInterface $route_match) {
      return $output;
 
     case 'entity.grade_scale.collection':
-    case 'grade_scale.add':
-    case 'entity.grade_scale.edit_form':
-      return '<p>' . t('TODO: grade_scale_help() ...') . '</p>';
+      return '<p>' . t('Grade scales are ...') . '</p>';
   }
 }
 
@@ -130,10 +128,10 @@ function grade_scale_entity_base_field_info_alter(&$fields, EntityTypeInterface 
  */
 function grade_scale_grade_valuation_info() {
   return [
-    'scale' => [
-      'label' => 'Scale',
-      'description' => t('The grade is a value from a pre-defined scale.'),
-      'widget_callback' => '',
-    ]
+  GRADE_ITEM_VALUATION_SCALE => [
+    'label' => 'Scale',
+    'description' => t('The grade is a value from a pre-defined scale.'),
+    'widget_callback' => '',
+  ]
   ];
 }
