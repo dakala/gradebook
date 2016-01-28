@@ -1,0 +1,17 @@
+gradebook.grade_items_tab:
+  route_name: entity.grade_item.collection
+  title: 'List'
+  base_route: entity.grade_item.collection
+
+# grade category
+gradebook.grade_categories_tab:
+  route_name: entity.grade_category.collection
+  title: 'List'
+  base_route: entity.grade_category.collection
+
+# grade item data
+gradebook.grade_item_data_tab:
+  route_name: entity.grade_item_data.collection
+  title: 'List'
+  base_route: entity.grade_item_data.collection
+
