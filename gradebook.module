@@ -10,8 +10,8 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 
-define('GRADE_ITEM_VALUATION_NUMERIC', 'numeric');
-define('GRADE_ITEM_VALUATION_STRING', 'string');
+const GRADE_ITEM_VALUATION_NUMERIC = 'numeric';
+const GRADE_ITEM_VALUATION_STRING = 'string';
 
 /**
  * Implements hook_help().
@@ -21,13 +21,16 @@ function gradebook_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.gradebook':
       $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('The Gradebook suite of modules allows users to manage <em>grade books</em> ...') . '</p>';
-
       return $output;
 
-    case 'entity.grade_letter_set.canonical':
-    case 'grade_letter.set_add':
-    case 'entity.grade_letter_set.edit_form':
-      return '<p>' . t('TODO: gradebook_help() ...') . '</p>';
+    case 'entity.grade_item.collection':
+      return '<p>' . t('Grade items provide grades for activities both online and offline.') . '</p>';
+
+    case 'entity.grade_item_data.collection':
+      return '<p>' . t('Grade item data provide additional information which may be shared between grade items and categories.') . '</p>';
+
+    case 'entity.grade_category.collection':
+      return '<p>' . t('Grade categories allows for the classification of grades.') . '</p>';
   }
 }
 
@@ -36,21 +39,16 @@ function gradebook_help($route_name, RouteMatchInterface $route_match) {
  */
 function gradebook_grade_valuation_info() {
   return [
-    'numeric' => [
+    GRADE_ITEM_VALUATION_NUMERIC => [
       'label' => 'Numeric',
       'description' => t('The grade is represented by a number.'),
       'widget_callback' => '',
     ],
-    'string' => [
+    GRADE_ITEM_VALUATION_STRING => [
       'label' => 'String',
       'description' => t('The grade is a textual feedback only.'),
       'widget_callback' => '',
     ],
-    'scale' => [
-      'label' => 'Scale',
-      'description' => t('The grade is a value from a pre-defined scale.'),
-      'widget_callback' => '',
-    ]
   ];
 }
 
@@ -88,3 +86,4 @@ function gradebook_form_node_type_form_submit($form, FormStateInterface $form_st
     'gradebook_entity.' . $form_state->getFormObject()->getEntity()->id(),
     $form_state->getValue('gradebook_node_type'))->save();
 }
+
