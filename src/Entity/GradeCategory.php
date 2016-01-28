@@ -34,6 +34,7 @@ use Drupal\user\UserInterface;
  *   },
  *   base_table = "grade_category",
  *   data_table = "grade_category_field_data",
+ *   field_ui_base_route = "entity.grade_category.collection",
  *   translatable = TRUE,
  *   entity_keys = {
  *     "id" = "id",
@@ -210,7 +211,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => -19,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
@@ -226,7 +227,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => -18,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
@@ -282,9 +283,13 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['exclude_empty'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Exclude empty grades when aggregating scores.'))
+      ->setLabel(t('Exclude empty grades'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'boolean_checkbox',
@@ -296,9 +301,13 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['drop_lowest'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Drop lowest number of grades entered when aggregating scores.'))
+      ->setLabel(t('Drop lowest grades'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -14,
+      ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
@@ -310,9 +319,13 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['override_category'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Allow category overrides when aggregating scores.'))
+      ->setLabel(t('Allow category overrides'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -13,
+      ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'boolean_checkbox',

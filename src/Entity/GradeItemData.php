@@ -34,6 +34,7 @@ use Drupal\user\UserInterface;
  *   },
  *   base_table = "grade_item_data",
  *   data_table = "grade_item_data_field_data",
+ *   field_ui_base_route = "entity.grade_item_data.collection",
  *   translatable = TRUE,
  *   entity_keys = {
  *     "id" = "id",
@@ -261,6 +262,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setLabel(t('Lowest mark'))
       ->setDescription(t('The lowest mark (%age) possible for this item.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -18,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -18,
@@ -273,6 +279,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setLabel(t('Highest mark'))
       ->setDescription(t('The highest mark (%age) possible for this item.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -17,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -17,
@@ -285,6 +296,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setLabel(t('Pass mark'))
       ->setDescription(t('The pass mark (%age) for this item.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -16,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -16,
@@ -298,6 +314,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDescription(t('The number of decimal points to show for this grade mark.'))
       ->setSetting('unsigned', TRUE)
       ->setSetting('allowed_values', range(0, 6))
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'options_select',
         'weight' => -15,
@@ -315,6 +336,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
         'type' => 'timestamp',
         'weight' => -14,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
         'weight' => -14,
@@ -332,6 +354,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
         'type' => 'timestamp',
         'weight' => -13,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'datetime_timestamp',
         'weight' => -13,
@@ -347,6 +370,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
         'type' => 'integer',
         'weight' => -12,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'number',
         'weight' => -12,

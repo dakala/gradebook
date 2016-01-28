@@ -197,6 +197,11 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
       ->setDescription(t('A description of the grade letter or long name.'))
       ->setTranslatable(TRUE)
       ->setSetting('max_length', 255)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -9,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -9,
@@ -209,6 +214,12 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
       ->setLabel(t('Lowest'))
       ->setDescription(t('The lowest mark (%age) for this grade letter.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -8,
+        'scale' => 2,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -8,
@@ -221,6 +232,12 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
       ->setLabel(t('Highest'))
       ->setDescription(t('The highest mark (%age) for this grade letter.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -7,
+        'scale' => 2,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -7,

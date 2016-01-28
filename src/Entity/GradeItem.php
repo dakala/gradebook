@@ -34,6 +34,7 @@ use Drupal\user\UserInterface;
  *   },
  *   base_table = "grade_item",
  *   data_table = "grade_item_field_data",
+ *   field_ui_base_route = "entity.grade_item.collection",
  *   translatable = TRUE,
  *   entity_keys = {
  *     "id" = "id",
@@ -259,13 +260,14 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
         'label' => 'above',
         'weight' => -19,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'inline_entity_form_complex',
         'weight' => -19,
         'settings' => array(
           'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
+          'allow_new' => TRUE,
+          'allow_existing' => TRUE,
         ),
       ))
       ->setDisplayConfigurable('form', TRUE);
@@ -283,16 +285,17 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['grade_valuation_type'] = BaseFieldDefinition::create('list_integer')
+    $fields['grade_valuation_type'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Grade valuation type'))
       ->setDescription(t('How the item is valuated.'))
-      ->setSetting('unsigned', TRUE)
+      ->setSetting('max_length', 20)
       ->setSetting('allowed_values', \Drupal::service('gradebook.manager')->getGradebookGradeValuationOptions())
       ->setDefaultValue(GRADE_ITEM_VALUATION_NUMERIC)
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'weight' => -17,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'options_select',
         'weight' => -17,
@@ -310,6 +313,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
         'label' => 'above',
         'weight' => -16,
       ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'entity_reference_autocomplete',
         'weight' => -16,
@@ -323,11 +327,33 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
 
     $fields['multiplicator'] = BaseFieldDefinition::create('float')
       ->setLabel(t('Multiplication factor'))
-      ->setDescription(t('The grade multiplication factor.'))
+      ->setDescription(t('Multiply all grades by this factor.'))
       ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -15,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
         'type' => 'string_textfield',
         'weight' => -15,
+        'settings' => array(
+          'size' => 10,
+        ),
+      ));
+
+    $fields['plusfactor'] = BaseFieldDefinition::create('float')
+      ->setLabel(t('Plus factor'))
+      ->setDescription(t('Add this factor to all grades.'))
+      ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'weight' => -14,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'string_textfield',
+        'weight' => -14,
         'settings' => array(
           'size' => 10,
         ),
