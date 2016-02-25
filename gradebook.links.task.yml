@@ -14,4 +14,3 @@ gradebook.grade_item_data_tab:
   route_name: entity.grade_item_data.collection
   title: 'List'
   base_route: entity.grade_item_data.collection
-
