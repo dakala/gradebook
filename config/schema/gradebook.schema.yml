@@ -1,6 +1,6 @@
 # Schema for the configuration files of the Gradebook module.
 
-grade_letter.set.*:
+gradebook.set.*:
   type: config_entity
   label: 'Grade letter settings'
   mapping:
