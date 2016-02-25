@@ -9,6 +9,7 @@ namespace Drupal\gradebook;
 
 use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Form controller for the grade letter set entity edit forms.
@@ -38,8 +39,7 @@ class GradeLetterSetForm extends BundleEntityFormBase {
         'replace' => '-',
       ),
       '#default_value' => $entity->id(),
-      // This id could be used for menu name.
-      '#maxlength' => 23,
+      '#maxlength' => EntityTypeInterface::BUNDLE_MAX_LENGTH,
     );
 
     $form['actions']['submit']['#value'] = t('Create new set');
