@@ -31,14 +31,11 @@ class GradeLetterSetDeleteForm extends EntityConfirmFormBase {
   /**
    * Get the confirmation text.
    *
-   * The confirm text is used as the text in the button that confirms the
-   * question posed by getQuestion().
-   *
    * @return string
    *   Translated string.
    */
   public function getConfirmText() {
-    return $this->t('Delete Grade letter set');
+    return $this->t('Delete grade letter set');
   }
 
   /**
