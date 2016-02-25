@@ -17,7 +17,6 @@ use Drupal\gradebook\GradeLetterSetInterface;
  *   id = "grade_letter_set",
  *   label = @Translation("Grade letter set"),
  *   handlers = {
- *     "storage" = "Drupal\gradebook\GradeLetterSetStorage",
  *     "access" = "Drupal\gradebook\GradeLetterSetAccessControlHandler",
  *     "list_builder" = "Drupal\gradebook\GradeLetterSetListBuilder",
  *     "form" = {
