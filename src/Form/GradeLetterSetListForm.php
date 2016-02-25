@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\shortcut\Form\GradeLetterSetCustomize.
+ * Contains \Drupal\gradebook\Form\GradeLetterSetListForm.
  */
 
 namespace Drupal\gradebook\Form;
@@ -14,7 +14,7 @@ use Drupal\Core\Render\Element;
 /**
  * Builds the grade letter set customize form.
  */
-class GradeLetterSetCustomize extends EntityForm {
+class GradeLetterSetListForm extends EntityForm {
 
   /**
    * The entity being used by this form.
@@ -30,16 +30,16 @@ class GradeLetterSetCustomize extends EntityForm {
     $account = \Drupal::currentUser();
 
     $form = parent::form($form, $form_state);
-    $form['grade_letters'] = array(
+    $form['grade_letter_sets'] = array(
       '#tree' => TRUE,
       '#weight' => -20,
     );
 
-    $form['grade_letters']['links'] = array(
+    $form['grade_letter_sets']['letters'] = array(
       '#type' => 'table',
       '#header' => array(t('Name'), t('Lowest'), t('Highest'), t('Weight'), t('Operations')),
       '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', array(':grade-letter' => $this->url('grade_letter.letter_add', array('grade_letter_set' => $this->entity->id())))),
-      '#attributes' => array('id' => 'grade_letters'),
+      '#attributes' => array('id' => 'grade_letter_sets'),
       '#tabledrag' => array(
         array(
           'action' => 'order',
@@ -49,41 +49,41 @@ class GradeLetterSetCustomize extends EntityForm {
       ),
     );
 
-    foreach ($this->entity->getGradeLetters() as $shortcut) {
-      $id = $shortcut->id();
+    foreach ($this->entity->getGradeLetters() as $grade_letter) {
+      $id = $grade_letter->id();
 
-      $form['grade_letters']['links'][$id]['#attributes']['class'][] = 'draggable';
-      $form['grade_letters']['links'][$id]['name'] = array(
+      $form['grade_letter_sets']['letters'][$id]['#attributes']['class'][] = 'draggable';
+      $form['grade_letter_sets']['letters'][$id]['name'] = array(
         '#type' => 'markup',
-        '#markup' => $shortcut->getTitle(),
+        '#markup' => $grade_letter->getTitle(),
       );
-      $form['grade_letters']['links'][$id]['lowest'] = array(
+      $form['grade_letter_sets']['letters'][$id]['lowest'] = array(
         '#type' => 'markup',
-        '#markup' => $shortcut->getLowest() . '%',
+        '#markup' => $grade_letter->getLowest() . '%',
       );
-      $form['grade_letters']['links'][$id]['highest'] = array(
+      $form['grade_letter_sets']['letters'][$id]['highest'] = array(
         '#type' => 'markup',
-        '#markup' => $shortcut->getHighest() . '%',
+        '#markup' => $grade_letter->getHighest() . '%',
       );
-      unset($form['grade_letters']['links'][$id]['name']['#access_callback']);
-      $form['grade_letters']['links'][$id]['#weight'] = $shortcut->getWeight();
-      $form['grade_letters']['links'][$id]['weight'] = array(
+      unset($form['grade_letter_sets']['letters'][$id]['name']['#access_callback']);
+      $form['grade_letter_sets']['letters'][$id]['#weight'] = $grade_letter->getWeight();
+      $form['grade_letter_sets']['letters'][$id]['weight'] = array(
         '#type' => 'weight',
-        '#title' => t('Weight for @title', array('@title' => $shortcut->getTitle())),
+        '#title' => t('Weight for @title', array('@title' => $grade_letter->getTitle())),
         '#title_display' => 'invisible',
-        '#default_value' => $shortcut->getWeight(),
+        '#default_value' => $grade_letter->getWeight(),
         '#attributes' => array('class' => array('grade-letter-weight')),
       );
 
       $links['edit'] = array(
         'title' => t('Edit'),
-        'url' => $shortcut->urlInfo(),
+        'url' => $grade_letter->toUrl(),
       );
       $links['delete'] = array(
         'title' => t('Delete'),
-        'url' => $shortcut->urlInfo('delete-form'),
+        'url' => $grade_letter->toUrl('delete-form'),
       );
-      $form['grade_letters']['links'][$id]['operations'] = array(
+      $form['grade_letter_sets']['letters'][$id]['operations'] = array(
         '#type' => 'operations',
         '#links' => $links,
         '#access' => $account->hasPermission('administer grade letters'),
@@ -96,12 +96,11 @@ class GradeLetterSetCustomize extends EntityForm {
    * {@inheritdoc}
    */
   protected function actions(array $form, FormStateInterface $form_state) {
-    // Only includes a Save action for the entity, no direct Delete button.
     return array(
       'submit' => array(
         '#type' => 'submit',
         '#value' => t('Save changes'),
-        '#access' => (bool) Element::getVisibleChildren($form['grade_letters']['links']),
+        '#access' => (bool) Element::getVisibleChildren($form['grade_letter_sets']['letters']),
         '#submit' => array('::submitForm', '::save'),
       ),
     );
@@ -111,10 +110,10 @@ class GradeLetterSetCustomize extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    foreach ($this->entity->getGradeLetters() as $shortcut) {
-      $weight = $form_state->getValue(array('grade_letter_sets', 'grade_letters', $shortcut->id(), 'weight'));
-      $shortcut->setWeight($weight);
-      $shortcut->save();
+    foreach ($this->entity->getGradeLetters() as $grade_letter) {
+      $weight = $form_state->getValue(array('grade_letter_sets', 'letters', $grade_letter->id(), 'weight'));
+      $grade_letter->setWeight($weight);
+      $grade_letter->save();
     }
     drupal_set_message(t('The grade letter set has been updated.'));
   }
