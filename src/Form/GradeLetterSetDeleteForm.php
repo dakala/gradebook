@@ -7,69 +7,66 @@
 
 namespace Drupal\gradebook\Form;
 
-use Drupal\Core\Entity\EntityDeleteForm;
+use Drupal\Core\Entity\EntityConfirmFormBase;
+use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\gradebook\GradeLetterSetStorageInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Database\Connection;
 
 /**
- * Builds the grade letter set deletion form.
+ *  Builds the grade letter set deletion form.
  */
-class GradeLetterSetDeleteForm extends EntityDeleteForm {
+class GradeLetterSetDeleteForm extends EntityConfirmFormBase {
 
   /**
-   * The database connection.
+   * Gets a confirmation question.
    *
-   * @var \Drupal\Core\Database\Connection
+   * @return string
+   *   Translated string.
    */
-  protected $database;
-
-  /**
-   * The grade letter set storage.
-   *
-   * @var \Drupal\gradebook\GradeLetterSetStorageInterface
-   */
-  protected $storage;
-
-  /**
-   * Constructs a GradeLetterSetDeleteForm object.
-   */
-  public function __construct(Connection $database, GradeLetterSetStorageInterface $storage) {
-    $this->database = $database;
-    $this->storage = $storage;
+  public function getQuestion() {
+    return $this->t('Are you sure you want to delete Grade letter set: %label?', array(
+      '%label' => $this->entity->label(),
+    ));
   }
 
   /**
-   * {@inheritdoc}
+   * Get the confirmation text.
+   *
+   * The confirm text is used as the text in the button that confirms the
+   * question posed by getQuestion().
+   *
+   * @return string
+   *   Translated string.
    */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('database'),
-      $container->get('entity.manager')->getStorage('grade_letter_set')
-    );
+  public function getConfirmText() {
+    return $this->t('Delete Grade letter set');
   }
 
   /**
-   * {@inheritdoc}
+   * Gets the cancel URL.
+   *
+   * @return \Drupal\Core\Url
+   *   The URL to go to if the user cancels the deletion.
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
-    // Find out how many users are directly assigned to this grade letter set, and
-    // make a message.
-    $number = $this->storage->countAssignedUsers($this->entity);
-    $info = '';
-    if ($number) {
-      $info .= '<p>' . $this->formatPlural($number,
-        '1 user has chosen or been assigned to this grade letter set.',
-        '@count users have chosen or been assigned to this grade letter set.') . '</p>';
-    }
+  public function getCancelUrl() {
+    return new Url('entity.grade_letter_set.collection');
+  }
 
+  /**
+   * The submit handler for the confirm form.
+   *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   An associative array containing the current state of the form.
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $this->entity->delete();
 
-    $form['info'] = array(
-      '#markup' => $info,
-    );
+    drupal_set_message($this->t('Grade letter set:  %label was deleted.', array(
+      '%label' => $this->entity->label(),
+    )));
 
-    return parent::buildForm($form, $form_state);
-   }
+    $form_state->setRedirectUrl($this->getCancelUrl());
+  }
 
 }
