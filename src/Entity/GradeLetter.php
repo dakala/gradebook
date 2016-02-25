@@ -16,7 +16,7 @@ use Drupal\link\LinkItemInterface;
 use Drupal\gradebook\GradeLetterInterface;
 
 /**
- * Defines the shortcut entity class.
+ * Defines the grade letter entity class.
  *
  * @ContentEntityType(
  *   id = "grade_letter",
@@ -150,7 +150,7 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
 
     // Entity::postSave() calls Entity::invalidateTagsOnSave(), which only
     // handles the regular cases. The GradeLetter entity has one special case: a
-    // newly created shortcut is *also* added to a grade letter set, so we must
+    // newly created grade letter is *also* added to a grade letter set, so we must
     // invalidate the associated grade letter set's cache tag.
     if (!$update) {
       Cache::invalidateTags($this->getCacheTagsToInvalidate());
@@ -264,6 +264,28 @@ class GradeLetter extends ContentEntityBase implements GradeLetterInterface {
       ));
 
     return $fields;
+  }
+
+  /**
+   * Sort grade letter objects.
+   *
+   * Callback for uasort().
+   *
+   * @param \Drupal\gradebook\GradeLetterInterface $a
+   *   First grade letter for comparison.
+   * @param \Drupal\gradebook\GradeLetterInterface $b
+   *   Second grade letter for comparison.
+   *
+   * @return int
+   *   The comparison result for uasort().
+   */
+  public static function sort(GradeLetterInterface $a, GradeLetterInterface $b) {
+    $a_weight = $a->getWeight();
+    $b_weight = $b->getWeight();
+    if ($a_weight == $b_weight) {
+      return strnatcasecmp($a->getTitle(), $b->getTitle());
+    }
+    return ($a_weight < $b_weight) ? -1 : 1;
   }
 
 }
