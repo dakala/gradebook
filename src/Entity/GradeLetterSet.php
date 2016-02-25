@@ -8,7 +8,6 @@
 namespace Drupal\gradebook\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\gradebook\GradeLetterSetInterface;
 
 /**
@@ -25,7 +24,7 @@ use Drupal\gradebook\GradeLetterSetInterface;
  *       "default" = "Drupal\gradebook\GradeLetterSetForm",
  *       "add" = "Drupal\gradebook\GradeLetterSetForm",
  *       "edit" = "Drupal\gradebook\GradeLetterSetForm",
- *       "list" = "Drupal\gradebook\Form\GradeLetterSetCustomize",
+ *       "list" = "Drupal\gradebook\Form\GradeLetterSetListForm",
  *       "delete" = "Drupal\gradebook\Form\GradeLetterSetDeleteForm"
  *     }
  *   },

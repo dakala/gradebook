@@ -17,13 +17,13 @@ use Drupal\gradebook\GradeLetterInterface;
 class GradeLetterController extends ControllerBase {
 
   /**
-   * Returns a form to add a new shortcut to a given set.
+   * Returns a form to add a new grade letter to a given set.
    *
    * @param \Drupal\gradebook\GradeLetterSetInterface $grade_letter_set
-   *   The grade letter set this shortcut will be added to.
+   *   The grade letter set this grade letter will be added to.
    *
    * @return array
-   *   The shortcut add form.
+   *   The grade letter add form.
    */
   public function addForm(GradeLetterSetInterface $grade_letter_set) {
     $grade_letter = $this->entityManager()->getStorage('grade_letter')->create(array('grade_letter_set' => $grade_letter_set->id()));
@@ -33,18 +33,18 @@ class GradeLetterController extends ControllerBase {
   /**
    * Deletes the selected grade_letter.
    *
-   * @param \Drupal\gradebook\GradeLetterInterface $shortcut
-   *   The shortcut to delete.
+   * @param \Drupal\gradebook\GradeLetterInterface $grade_letter
+   *   The grade letter to delete.
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   A redirect to the previous location or the front page when destination
    *   is not set.
    */
-  public function deleteShortcutLinkInline(GradeLetterInterface $shortcut) {
-    $label = $shortcut->label();
+  public function deleteShortcutLinkInline(GradeLetterInterface $grade_letter) {
+    $label = $grade_letter->label();
 
     try {
-      $shortcut->delete();
+      $grade_letter->delete();
       drupal_set_message($this->t('The grade letter %title has been deleted.', array('%title' => $label)));
     }
     catch (\Exception $e) {

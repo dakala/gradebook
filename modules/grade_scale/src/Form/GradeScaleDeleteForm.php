@@ -26,7 +26,7 @@ class GradeScaleDeleteForm extends EntityDeleteForm {
   protected $database;
 
   /**
-   * The shortcut storage.
+   * The grade scale storage.
    *
    * @var \Drupal\grade_scale\GradeScaleStorageInterface
    */

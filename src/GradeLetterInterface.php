@@ -34,18 +34,18 @@ interface GradeLetterInterface extends ContentEntityInterface {
   public function setTitle($title);
 
   /**
-   * Returns the weight among shortcuts with the same depth.
+   * Returns the weight among grade letters with the same depth.
    *
    * @return int
-   *   The shortcut weight.
+   *   The grade letter weight.
    */
   public function getWeight();
 
   /**
-   * Sets the weight among shortcuts with the same depth.
+   * Sets the weight among grade letters with the same depth.
    *
    * @param int $weight
-   *   The shortcut weight.
+   *   The grade letter weight.
    *
    * @return \Drupal\gradebook\GradeLetterInterface
    *   The called grade letter entity.
@@ -72,18 +72,18 @@ interface GradeLetterInterface extends ContentEntityInterface {
   public function setDescription($description);
 
   /**
-   * Returns the highest among shortcuts with the same depth.
+   * Returns the highest among grade letters with the same depth.
    *
    * @return int
-   *   The shortcut highest.
+   *   The grade letter highest.
    */
   public function getHighest();
 
   /**
-   * Sets the highest among shortcuts with the same depth.
+   * Sets the highest among grade letters with the same depth.
    *
    * @param int $highest
-   *   The shortcut highest.
+   *   The highest grade letter.
    *
    * @return \Drupal\gradebook\GradeLetterInterface
    *   The called grade letter entity.
@@ -91,18 +91,18 @@ interface GradeLetterInterface extends ContentEntityInterface {
   public function setHighest($highest);
 
   /**
-   * Returns the lowest among shortcuts with the same depth.
+   * Returns the lowest among grade letters with the same depth.
    *
    * @return int
-   *   The shortcut lowest.
+   *   The lowest grade letter.
    */
   public function getLowest();
 
   /**
-   * Sets the lowest among shortcuts with the same depth.
+   * Sets the lowest among grade letters with the same depth.
    *
    * @param int $lowest
-   *   The shortcut lowest.
+   *   The lowest grade letter.
    *
    * @return \Drupal\gradebook\GradeLetterInterface
    *   The called grade letter entity.

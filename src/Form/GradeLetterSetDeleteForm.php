@@ -26,7 +26,7 @@ class GradeLetterSetDeleteForm extends EntityDeleteForm {
   protected $database;
 
   /**
-   * The shortcut storage.
+   * The grade letter set storage.
    *
    * @var \Drupal\gradebook\GradeLetterSetStorageInterface
    */
@@ -64,11 +64,6 @@ class GradeLetterSetDeleteForm extends EntityDeleteForm {
         '@count users have chosen or been assigned to this grade letter set.') . '</p>';
     }
 
-    // Also, if a module implements hook_shortcut_default_set(), it's possible
-    // that this set is being used as a default set. Add a message about that too.
-    if ($this->moduleHandler->getImplementations('shortcut_default_set')) {
-      $info .= '<p>' . t('If you have chosen this grade letter set as the default for some or all users, they may also be affected by deleting it.') . '</p>';
-    }
 
     $form['info'] = array(
       '#markup' => $info,

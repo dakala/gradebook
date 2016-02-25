@@ -42,7 +42,7 @@ class GradeItemListBuilder extends EntityListBuilder {
 
     $operations['view'] = array(
       'title' => t('View'),
-      'url' => $entity->urlInfo(),
+      'url' => $entity->toUrl(),
     );
 
     return $operations;
@@ -54,7 +54,7 @@ class GradeItemListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
 
     $langcode = $entity->language()->getId();
-    $uri = $entity->urlInfo();
+    $uri = $entity->toUrl();
     $options = $uri->getOptions();
     $options += ($langcode != LanguageInterface::LANGCODE_NOT_SPECIFIED && isset($languages[$langcode]) ? array('language' => $languages[$langcode]) : array());
     $uri->setOptions($options);

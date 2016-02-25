@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * Builds the page for administering shortcut sets.
+ * Builds the page for administering grade letter sets.
  */
 class GradeLetterSetController extends ControllerBase {
 
@@ -60,7 +60,7 @@ class GradeLetterSetController extends ControllerBase {
     $link = $request->query->get('link');
     $name = $request->query->get('name');
     if (parse_url($link, PHP_URL_SCHEME) === NULL && $this->pathValidator->isValid($link)) {
-      $shortcut = $this->entityManager()->getStorage('grade_letter')->create(array(
+      $grade_letter = $this->entityManager()->getStorage('grade_letter')->create(array(
         'title' => $name,
         'grade_letter_set' => $grade_letter_set->id(),
         'link' => array(
@@ -69,11 +69,11 @@ class GradeLetterSetController extends ControllerBase {
       ));
 
       try {
-        $shortcut->save();
-        drupal_set_message($this->t('Added a grade letter %title.', array('%title' => $shortcut->label())));
+        $grade_letter->save();
+        drupal_set_message($this->t('Added a grade letter %title.', array('%title' => $grade_letter->label())));
       }
       catch (\Exception $e) {
-        drupal_set_message($this->t('Unable to add a grade letter %title.', array('%title' => $shortcut->label())), 'error');
+        drupal_set_message($this->t('Unable to add a grade letter %title.', array('%title' => $grade_letter->label())), 'error');
       }
 
       return $this->redirect('<front>');

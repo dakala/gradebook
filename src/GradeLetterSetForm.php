@@ -61,7 +61,7 @@ class GradeLetterSetForm extends BundleEntityFormBase {
     else {
       drupal_set_message(t('Updated set name to %set_name.', array('%set_name' => $entity->label())));
     }
-    $form_state->setRedirectUrl($this->entity->urlInfo('list-form'));
+    $form_state->setRedirectUrl($this->entity->toUrl('list-form'));
   }
 
 }
