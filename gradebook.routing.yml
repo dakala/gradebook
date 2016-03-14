@@ -20,7 +20,7 @@ entity.grade_letter_set.collection:
   path: '/admin/config/gradebook/grade_letter_set'
   defaults:
     _entity_list: 'grade_letter_set'
-    _title: 'Grade letters'
+    _title: 'Grade letter sets'
   requirements:
     _permission: 'administer grade letters'
 
@@ -36,7 +36,8 @@ entity.grade_letter_set.list_form:
   path: '/admin/config/gradebook/grade_letter/manage/{grade_letter_set}/list'
   defaults:
     _entity_form: 'grade_letter_set.list'
-    _title: 'List grade letters'
+#    _title: 'Grade letters'
+    _title_callback: '\Drupal\gradebook\Controller\GradeLetterController::pageTitle'
   requirements:
     _entity_access: 'grade_letter_set.update'
 
