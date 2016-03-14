@@ -31,6 +31,12 @@ function gradebook_help($route_name, RouteMatchInterface $route_match) {
 
     case 'entity.grade_category.collection':
       return '<p>' . t('Grade categories allows for the classification of grades.') . '</p>';
+
+    case 'entity.grade_letter_set.collection':
+      return '<p>' . t('List of all grade letter sets.') . '</p>';
+
+    case 'entity.grade_letter_set.list_form':
+      return '<p>' . t('List of grade letters in set.') . '</p>';
   }
 }
 
