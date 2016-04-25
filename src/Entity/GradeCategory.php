@@ -304,6 +304,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setLabel(t('Drop lowest grades'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
+      ->setSetting('unsigned', TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'weight' => -14,
@@ -347,12 +348,12 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         'weight' => -12,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'inline_entity_form_complex',
         'weight' => -12,
         'settings' => array(
           'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
+          'allow_new' => TRUE,
+          'allow_existing' => TRUE,
         ),
       ))
       ->setDisplayConfigurable('form', TRUE);
