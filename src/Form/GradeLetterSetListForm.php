@@ -37,7 +37,7 @@ class GradeLetterSetListForm extends EntityForm {
 
     $form['grade_letter_sets']['letters'] = array(
       '#type' => 'table',
-      '#header' => array(t('Name'), t('Lowest'), t('Highest'), t('Weight'), t('Operations')),
+      '#header' => array(t('Name'), t('Description'), t('Lowest'), t('Highest'), t('Weight'), t('Operations')),
       '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', array(':grade-letter' => $this->url('grade_letter.letter_add', array('grade_letter_set' => $this->entity->id())))),
       '#attributes' => array('id' => 'grade_letter_sets'),
       '#tabledrag' => array(
@@ -56,6 +56,10 @@ class GradeLetterSetListForm extends EntityForm {
       $form['grade_letter_sets']['letters'][$id]['name'] = array(
         '#type' => 'markup',
         '#markup' => $grade_letter->getTitle(),
+      );
+      $form['grade_letter_sets']['letters'][$id]['description'] = array(
+        '#type' => 'markup',
+        '#markup' => $grade_letter->getDescription(),
       );
       $form['grade_letter_sets']['letters'][$id]['lowest'] = array(
         '#type' => 'markup',
