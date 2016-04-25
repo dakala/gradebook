@@ -249,7 +249,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDisplayOptions('view', array(
         'label' => 'above',
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => -19,
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
@@ -328,11 +328,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
     $fields['hidden'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Hidden until'))
       ->setDescription(t('If set, item is hidden until this date.'))
-      ->setDefaultValue([])
+      ->setDefaultValue(0)
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'timestamp',
         'weight' => -14,
       ))
@@ -346,11 +346,11 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
     $fields['locked'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Locked after'))
       ->setDescription(t('If set, item is locked after this date.'))
-      ->setDefaultValue([])
+      ->setDefaultValue(0)
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'timestamp',
         'weight' => -13,
       ))
@@ -366,7 +366,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDescription(t('Weight override.'))
       ->setDefaultValue(0)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'integer',
         'weight' => -12,
       ))
@@ -384,7 +384,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'author',
         'weight' => 0,
       ))
