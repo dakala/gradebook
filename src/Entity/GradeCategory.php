@@ -366,7 +366,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
-        'label' => 'hidden',
+        'label' => 'above',
         'type' => 'author',
         'weight' => 0,
       ))

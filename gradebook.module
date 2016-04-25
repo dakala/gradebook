@@ -49,6 +49,9 @@ function gradebook_theme() {
     'grade_item_data' => [
       'render element' => 'elements',
     ],
+    'grade_category' => [
+      'render element' => 'elements',
+    ],
   ];
 }
 
@@ -79,6 +82,31 @@ function template_preprocess_grade_item_data(array &$variables) {
 
   $variables['label'] = $grade_item_data->getTitle();
   $variables['url'] = $grade_item_data->toUrl();
+
+  // Helpful $content variable for templates.
+  $variables['content'] = [];
+  foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Prepares variables for profile templates.
+ *
+ * Default template: profile.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing rendered fields.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_grade_category(array &$variables) {
+  /** @var Drupal\gradebook\GradeCategoryInterface $grade_category */
+  $grade_category = $variables['elements']['#grade_category'];
+  $variables['grade_category'] = $grade_category;
+
+  $variables['label'] = $grade_category->getTitle();
+  $variables['url'] = $grade_category->toUrl();
 
   // Helpful $content variable for templates.
   $variables['content'] = [];
