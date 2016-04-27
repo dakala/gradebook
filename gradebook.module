@@ -11,7 +11,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 
 const GRADE_ITEM_VALUATION_NUMERIC = 'numeric';
-const GRADE_ITEM_VALUATION_STRING = 'string';
+const GRADE_ITEM_VALUATION_TEXT = 'text';
 
 /**
  * Implements hook_help().
@@ -125,8 +125,8 @@ function gradebook_grade_valuation_info() {
       'description' => t('The grade is represented by a number.'),
       'widget_callback' => '',
     ],
-    GRADE_ITEM_VALUATION_STRING => [
-      'label' => 'String',
+    GRADE_ITEM_VALUATION_TEXT => [
+      'label' => 'Text',
       'description' => t('The grade is a textual feedback only.'),
       'widget_callback' => '',
     ],
