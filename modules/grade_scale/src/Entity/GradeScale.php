@@ -44,7 +44,7 @@ use Drupal\user\UserInterface;
  *   links = {
  *     "canonical" = "/admin/config/gradebook/grade_scale/{grade_scale}",
  *     "delete-form" = "/admin/config/gradebook/grade_scale/{grade_scale}/delete",
- *     "edit-form" = "/admin/config/gradebook/grade_scale/{grade_scale}",
+ *     "edit-form" = "/admin/config/gradebook/grade_scale/{grade_scale}/edit",
  *     "collection" = "/admin/config/gradebook/grade_scale",
  *   },
  *   list_cache_tags = { "config:grade_scale_list" }
