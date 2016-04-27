@@ -5,16 +5,27 @@
  * Install, update and uninstall functions for the grade scale module.
  */
 
+use Drupal\Core\Language\Language;
+
 /**
  * Implements hook_install().
  */
 function grade_scale_install() {
-
+  grade_scale_create_scales();
 }
 
 /**
- * Implements hook_uninstall().
+ * Create scales.
  */
-function grade_scale_uninstall() {
+function grade_scale_create_scales() {
+  $values = [
+    'title' => 'Basic',
+    'description' => t('A basic scale'),
+    'format' => 'basic_html',
+    'langcode' => Language::LANGCODE_NOT_SPECIFIED,
+    'scales' => ['Poor', 'Fair', 'Good', 'Very good', 'Excellent'],
+  ];
 
+  $scale = \Drupal::entityManager()->getStorage('grade_scale')->create($values);
+  $scale->save();
 }
