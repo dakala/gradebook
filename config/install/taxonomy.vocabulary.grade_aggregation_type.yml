@@ -3,6 +3,6 @@ status: true
 dependencies: {  }
 name: 'Grade aggregation type'
 vid: grade_aggregation_type
-description: 'How to aggregation grade marks or scores'
+description: 'How to aggregate grade marks or scores'
 hierarchy: 0
 weight: 0

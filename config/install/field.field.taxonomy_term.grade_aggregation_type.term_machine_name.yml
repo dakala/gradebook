@@ -1,0 +1,19 @@
+uuid: e9b93545-ea05-4c87-9fe2-c783be0751c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.term_machine_name
+    - taxonomy.vocabulary.grade_aggregation_type
+id: taxonomy_term.grade_aggregation_type.term_machine_name
+field_name: term_machine_name
+entity_type: taxonomy_term
+bundle: grade_aggregation_type
+label: 'Machine name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

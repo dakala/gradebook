@@ -1,0 +1,28 @@
+uuid: 2d035752-eb4e-4c86-85d0-2ae81158a719
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.grade_method.term_machine_name
+    - taxonomy.vocabulary.grade_method
+  module:
+    - text
+id: taxonomy_term.grade_method.default
+targetEntityType: taxonomy_term
+bundle: grade_method
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  term_machine_name:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+hidden: {  }
