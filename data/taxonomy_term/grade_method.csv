@@ -1,4 +1,4 @@
 name,description,format,weight,vid,parent,term_machine_name
-"Simple",<p>Simple driect scoring of activities.</p>,basic_hmtl,0,grade_method,,simple
-"Guided","<p>Activity is graded based on a set of criteria, free scoring and comments.</p>",basic_hmtl,0,grade_method,,guided
-"Rubric","<p>A table-like format with criteria, levels of accomplishment, points and any comments</p>",basic_hmtl,0,grade_method,,rubric
+"Simple",<p>Simple driect scoring of activities.</p>,basic_html,0,grade_method,,simple
+"Guided","<p>Activity is graded based on a set of criteria, free scoring and comments.</p>",basic_html,0,grade_method,,guided
+"Rubric","<p>A table-like format with criteria, levels of accomplishment, points and any comments</p>",basic_html,0,grade_method,,rubric
