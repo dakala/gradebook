@@ -222,7 +222,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
 
     $fields['display_name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Display name'))
-      ->setDescription(t('The label when displaying category totals.'))
+      ->setDescription(t('The label to use when displaying category totals.'))
       ->setSetting('max_length', 20)
       ->setDisplayOptions('view', array(
         'label' => 'above',
@@ -249,13 +249,8 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
-        'weight' => -17,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ),
+        'type' => 'options_select',
+        'weight' => -15,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
@@ -272,18 +267,14 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
         'weight' => -16,
       ))
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
-        'weight' => -16,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ),
+        'type' => 'options_select',
+        'weight' => -15,
       ))
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['exclude_empty'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Exclude empty grades'))
+      ->setDescription(t('Skip empty grades and do not penalise students.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
       ->setDisplayOptions('view', array(
@@ -302,6 +293,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
 
     $fields['drop_lowest'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('Drop lowest grades'))
+      ->setDescription(t('Exclude the specified number of lowest grades from category totals.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(FALSE)
       ->setSetting('unsigned', TRUE)
