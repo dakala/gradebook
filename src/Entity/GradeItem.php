@@ -315,13 +315,8 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', array(
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'options_select',
         'weight' => -16,
-        'settings' => array(
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'placeholder' => '',
-        ),
       ))
       ->setDisplayConfigurable('form', TRUE);
 
