@@ -1,0 +1,3 @@
+name,description,format,weight,vid,parent,term_machine_name
+System,,basic_hmtl,0,grade_source,,system
+Manual,,basic_hmtl,0,grade_source,,manual

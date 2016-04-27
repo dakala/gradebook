@@ -1,0 +1,10 @@
+name,description,format,weight,vid,parent,term_machine_name
+Real,,basic_hmtl,0,grade_display_type,,real
+Letter,,basic_hmtl,0,grade_display_type,,letter
+Percentage,,basic_hmtl,0,grade_display_type,,percentage
+"Real (percentage)",,basic_hmtl,0,grade_display_type,,real_percentage
+"Real (letter)",,basic_hmtl,0,grade_display_type,,real_letter
+"Percentage (real)",,basic_hmtl,0,grade_display_type,,percentage_real
+"Percentage (letter)",,basic_hmtl,0,grade_display_type,,percentage_letter
+"Letter (real)",,basic_hmtl,0,grade_display_type,,letter_real
+"Letter (percentage)",,basic_hmtl,0,grade_display_type,,letter_percentage
