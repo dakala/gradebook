@@ -50,7 +50,7 @@ function gradebook_create_terms() {
           'name' => $row['name'],
           'description' => $row['description'],
           'format' => (isset($row['format'])) ? $row['format'] : filter_fallback_format(),
-          'weight' => isset($row['weight']) ? $row['name'] : 0,
+          'weight' => isset($row['weight']) ? $row['weight'] : 0,
           'langcode' => Language::LANGCODE_NOT_SPECIFIED,
           'term_machine_name' => $row['term_machine_name'],
         ];
