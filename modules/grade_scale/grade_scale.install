@@ -26,6 +26,6 @@ function grade_scale_create_scales() {
     'scales' => ['Poor', 'Fair', 'Good', 'Very good', 'Excellent'],
   ];
 
-  $scale = \Drupal::entityManager()->getStorage('grade_scale')->create($values);
+  $scale = \Drupal::entityTypeManager()->getStorage('grade_scale')->create($values);
   $scale->save();
 }

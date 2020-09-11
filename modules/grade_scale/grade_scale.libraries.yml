@@ -1,4 +1,4 @@
-drupal.grade_scale:
+grade_scale:
   version: VERSION
   css:
     theme:

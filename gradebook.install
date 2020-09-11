@@ -20,7 +20,8 @@ function gradebook_install() {
 function gradebook_create_terms() {
   $files = ['grade_aggregation_type', 'grade_display_type', 'grade_method', 'grade_source'];
   foreach ($files as $file) {
-    $filename = drupal_get_path('module', 'gradebook') . '/data/taxonomy_term/' . $file . '.csv';
+    $path = \Drupal::service('extension.list.module')->getPath('gradebook');
+    $filename = $path . '/data/taxonomy_term/' . $file . '.csv';
 
     $fp = fopen($filename, 'r');
 
@@ -55,7 +56,7 @@ function gradebook_create_terms() {
           'term_machine_name' => $row['term_machine_name'],
         ];
 
-        $term = \Drupal::entityManager()->getStorage('taxonomy_term')->create($values);
+        $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create($values);
         $term->save();
       }
     }

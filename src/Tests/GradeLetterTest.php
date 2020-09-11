@@ -96,7 +96,7 @@ class GradeLetterSetsTest extends ShortcutTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save changes'));
     $this->assertRaw(t('The grade letter set has been updated.'));
 
-    \Drupal::entityManager()->getStorage('shortcut')->resetCache();
+    \Drupal::entityTypeManager()->getStorage('shortcut')->resetCache();
     // Check to ensure that the shortcut weights have changed and that
     // GradeLetterSet::.getGradeLetters() returns shortcuts in the new order.
     $this->assertIdentical(array_reverse(array_keys($shortcuts)), array_keys($set->getShortcuts()));
@@ -122,7 +122,7 @@ class GradeLetterSetsTest extends ShortcutTestBase {
   function testGradeLetterSetAssign() {
     $new_set = $this->generateGradeLetterSet($this->randomMachineName());
 
-    \Drupal::entityManager()->getStorage('grade_letter_set')->assignUser($new_set, $this->shortcutUser);
+    \Drupal::entityTypeManager()->getStorage('grade_letter_set')->assignUser($new_set, $this->shortcutUser);
     $current_set = shortcut_current_displayed_set($this->shortcutUser);
     $this->assertTrue($new_set->id() == $current_set->id(), "Successfully switched another user's grade letter set.");
   }
@@ -174,7 +174,7 @@ class GradeLetterSetsTest extends ShortcutTestBase {
   function testGradeLetterSetUnassign() {
     $new_set = $this->generateGradeLetterSet($this->randomMachineName());
 
-    $grade_letter_set_storage = \Drupal::entityManager()->getStorage('grade_letter_set');
+    $grade_letter_set_storage = \Drupal::entityTypeManager()->getStorage('grade_letter_set');
     $grade_letter_set_storage->assignUser($new_set, $this->shortcutUser);
     $grade_letter_set_storage->unassignUser($this->shortcutUser);
     $current_set = shortcut_current_displayed_set($this->shortcutUser);

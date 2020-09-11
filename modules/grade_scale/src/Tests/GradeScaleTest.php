@@ -96,7 +96,7 @@ class GradeScaleTest extends GradeScaleTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save changes'));
     $this->assertRaw(t('The shortcut set has been updated.'));
 
-    \Drupal::entityManager()->getStorage('shortcut')->resetCache();
+    \Drupal::entityTypeManager()->getStorage('shortcut')->resetCache();
     // Check to ensure that the shortcut weights have changed and that
     // GradeScale::.getShortcuts() returns shortcuts in the new order.
     $this->assertIdentical(array_reverse(array_keys($shortcuts)), array_keys($set->getShortcuts()));
@@ -122,7 +122,7 @@ class GradeScaleTest extends GradeScaleTestBase {
   function testGradeScaleAssign() {
     $new_set = $this->generateGradeScale($this->randomMachineName());
 
-    \Drupal::entityManager()->getStorage('grade_scale')->assignUser($new_set, $this->shortcutUser);
+    \Drupal::entityTypeManager()->getStorage('grade_scale')->assignUser($new_set, $this->shortcutUser);
     $current_set = grade_scale_current_displayed_set($this->shortcutUser);
     $this->assertTrue($new_set->id() == $current_set->id(), "Successfully switched another user's grade scale.");
   }
@@ -174,7 +174,7 @@ class GradeScaleTest extends GradeScaleTestBase {
   function testGradeScaleUnassign() {
     $new_set = $this->generateGradeScale($this->randomMachineName());
 
-    $grade_scale_storage = \Drupal::entityManager()->getStorage('grade_scale');
+    $grade_scale_storage = \Drupal::entityTypeManager()->getStorage('grade_scale');
     $grade_scale_storage->assignUser($new_set, $this->shortcutUser);
     $grade_scale_storage->unassignUser($this->shortcutUser);
     $current_set = grade_scale_current_displayed_set($this->shortcutUser);

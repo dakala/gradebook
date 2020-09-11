@@ -92,7 +92,7 @@ abstract class ShortcutTestBase extends WebTestBase {
     // Log in as admin and grab the default grade letter set.
     $this->drupalLogin($this->adminUser);
     $this->set = GradeLetterSet::load('default');
-    \Drupal::entityManager()->getStorage('grade_letter_set')->assignUser($this->set, $this->adminUser);
+    \Drupal::entityTypeManager()->getStorage('grade_letter_set')->assignUser($this->set, $this->adminUser);
   }
 
   /**
@@ -123,7 +123,7 @@ abstract class ShortcutTestBase extends WebTestBase {
    */
   function getShortcutInformation(GradeLetterSetInterface $set, $key) {
     $info = array();
-    \Drupal::entityManager()->getStorage('shortcut')->resetCache();
+    \Drupal::entityTypeManager()->getStorage('shortcut')->resetCache();
     foreach ($set->getGradeLetters() as $shortcut) {
       if ($key == 'link') {
         $info[] = $shortcut->link->uri;

@@ -91,7 +91,7 @@ abstract class GradeScaleTestBase extends WebTestBase {
     // Log in as admin and grab the default shortcut set.
     $this->drupalLogin($this->adminUser);
     $this->set = GradeScale::load('default');
-    \Drupal::entityManager()->getStorage('grade_scale')->assignUser($this->set, $this->adminUser);
+    \Drupal::entityTypeManager()->getStorage('grade_scale')->assignUser($this->set, $this->adminUser);
   }
 
   /**
@@ -122,7 +122,7 @@ abstract class GradeScaleTestBase extends WebTestBase {
    */
   function getShortcutInformation(GradeScaleInterface $set, $key) {
     $info = array();
-    \Drupal::entityManager()->getStorage('shortcut')->resetCache();
+    \Drupal::entityTypeManager()->getStorage('shortcut')->resetCache();
     foreach ($set->getShortcuts() as $shortcut) {
       if ($key == 'link') {
         $info[] = $shortcut->link->uri;

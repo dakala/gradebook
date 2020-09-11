@@ -9,7 +9,7 @@ namespace Drupal\gradebook;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -32,7 +32,7 @@ class GradebookManager implements GradebookManagerInterface {
   /**
    * Entity manager service
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityManager;
 
@@ -48,16 +48,16 @@ class GradebookManager implements GradebookManagerInterface {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity manager service.
    * @param \Drupal\Core\Database\Connection $connection
    *   The current database connection.
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The translation manager service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, EntityManagerInterface $entity_manager, Connection $connection, TranslationInterface $string_translation) {
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_manager, Connection $connection, TranslationInterface $string_translation) {
     $this->configFactory = $config_factory;
-    $this->entityManager = $entity_manager;
+    $this->entityManager = $entity_manager; // @todo:
     $this->connection = $connection;
     $this->stringTranslation = $string_translation;
   }
@@ -91,7 +91,7 @@ class GradebookManager implements GradebookManagerInterface {
    */
   public function getGradebookEnabledEntities() {
     $entities = \Drupal::config('gradebook.settings')->get('gradebook_entity');
-    return (!empty($entities)) ? array_filter($entities) : $entities;
+    return is_array($entities) && $entities ? array_filter($entities) : [];
   }
 
   /**

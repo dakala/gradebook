@@ -2,8 +2,7 @@ name: Grade scales
 type: module
 description: 'Manage grade scales for grade books.'
 package: phpEdu
-version: VERSION
-core: 8.x
+core_version_requirement: ^8 || ^9
 configure: entity.grade_scale.collection
 dependencies:
-  - gradebook
+  - gradebook:gradebook

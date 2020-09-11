@@ -148,7 +148,7 @@ function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_st
     '#title' => t('Gradebook'),
     '#group' => 'additional_settings',
     '#attached' => array(
-      'library' => array('gradebook/drupal.content_types'),
+      'library' => array('gradebook/gradebook.content_types'),
     ),
   );
 
@@ -156,7 +156,7 @@ function gradebook_form_node_type_form_alter(&$form, FormStateInterface $form_st
     '#type' => 'checkbox',
     '#title' => t('Enabled.'),
     '#default_value' => \Drupal::service('gradebook.manager')->isGradebookEnabled($form_state->getFormObject()->getEntity()->id()),
-    '#description' => t('Content will used as Gradebook activity.'),
+    '#description' => t('Content will be used as Gradebook activity.'),
   );
 
   $form['actions']['submit']['#submit'][] = 'gradebook_form_node_type_form_submit';
