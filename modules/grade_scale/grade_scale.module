@@ -72,18 +72,18 @@ function grade_scale_theme_suggestions_grade_scale(array $variables) {
  */
 function template_preprocess_grade_scale(&$variables) {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
-
   $variables['grade_scale'] = $variables['elements']['#grade_scale'];
-  /** @var \Drupal\grade_scale\GradeScaleInterface $grade_scale */
-  $grade_scale = $variables['grade_scale'];
-  
-  $variables['date'] = drupal_render($variables['elements']['created']);
-  unset($variables['elements']['created']);
-  $variables['author_name'] = drupal_render($variables['elements']['uid']);
-  unset($variables['elements']['uid']);
 
-  $variables['label'] = $variables['elements']['title'];
+  $renderer = \Drupal::service('renderer');
+  // @todo: No "created" field.
+  $variables['date'] = $renderer->render($variables['elements']['created']);
+  $variables['author_name'] = $renderer->render($variables['elements']['uid']);
+  $variables['label'] = $variables['grade_scale']->label();
+
   unset($variables['elements']['title']);
+  unset($variables['elements']['uid']);
+  unset($variables['elements']['created']);
+
   // Helpful $content variable for templates.
   $variables += array('content' => array());
   foreach (Element::children($variables['elements']) as $key) {

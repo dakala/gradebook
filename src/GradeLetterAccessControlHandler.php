@@ -28,7 +28,7 @@ class GradeLetterAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'update':
-        return AccessResult::allowedIf($account->hasPermission('administer grade letters'))->cachePerPermissions()->cacheUntilEntityChanges($entity);
+        return AccessResult::allowedIf($account->hasPermission('administer grade letters'))->cachePerPermissions()->addCacheableDependency($entity);
 
       case 'delete':
         return AccessResult::allowedIf($account->hasPermission('administer grade letters') && $entity->getGradeLetterSet() != 'default')->cachePerPermissions();

@@ -7,12 +7,11 @@
 
 namespace Drupal\gradebook\Entity;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\gradebook\GradeItemDataInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -52,6 +51,8 @@ use Drupal\user\UserInterface;
  * )
  */
 class GradeItemData extends ContentEntityBase implements GradeItemDataInterface {
+
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -187,7 +188,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
     $this->set('weight', $weight);
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -381,7 +382,7 @@ class GradeItemData extends ContentEntityBase implements GradeItemDataInterface 
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'above',

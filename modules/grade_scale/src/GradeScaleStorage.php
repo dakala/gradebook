@@ -8,8 +8,10 @@
 namespace Drupal\grade_scale;
 
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Cache\MemoryCache\MemoryCacheInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorage;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -29,6 +31,13 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
   protected $moduleHandler;
 
   /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
    * Constructs a GradeScaleStorageController object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_info
@@ -41,11 +50,24 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    *   The module handler.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
+   * @param \Drupal\Core\Cache\MemoryCache\MemoryCacheInterface $memory_cache
+   *   The memory cache.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database.
    */
-  public function __construct(EntityTypeInterface $entity_info, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, ModuleHandlerInterface $module_handler, LanguageManagerInterface $language_manager) {
-    parent::__construct($entity_info, $config_factory, $uuid_service, $language_manager);
+  public function __construct(
+    EntityTypeInterface $entity_info,
+    ConfigFactoryInterface $config_factory,
+    UuidInterface $uuid_service,
+    ModuleHandlerInterface $module_handler,
+    LanguageManagerInterface $language_manager,
+    MemoryCacheInterface $memory_cache,
+    Connection $database
+  ) {
+    parent::__construct($entity_info, $config_factory, $uuid_service, $language_manager, $memory_cache);
 
     $this->moduleHandler = $module_handler;
+    $this->database = $database;
   }
 
   /**
@@ -57,7 +79,9 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
       $container->get('config.factory'),
       $container->get('uuid'),
       $container->get('module_handler'),
-      $container->get('language_manager')
+      $container->get('language_manager'),
+      $container->get('entity.memory_cache'),
+      $container->get('database')
     );
   }
 
@@ -67,7 +91,7 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
   public function deleteAssignedGradeScales(GradeScaleInterface $entity) {
     // First, delete any user assignments for this set, so that each of these
     // users will go back to using whatever default set applies.
-    db_delete('grade_scale_users')
+    $this->database->delete('grade_scale_users')
       ->condition('set_name', $entity->id())
       ->execute();
   }
@@ -76,9 +100,9 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function assignUser(GradeScaleInterface $grade_scale, $account) {
-    db_merge('grade_scale_users')
+    $this->database->merge('grade_scale_users')
       ->key('uid', $account->id())
-      ->fields(array('set_name' => $grade_scale->id()))
+      ->fields(['set_name' => $grade_scale->id()])
       ->execute();
     drupal_static_reset('grade_scale_current_displayed_set');
   }
@@ -87,9 +111,10 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function unassignUser($account) {
-    $deleted = db_delete('grade_scale_users')
+    $deleted = $this->database->delete('grade_scale_users')
       ->condition('uid', $account->id())
       ->execute();
+
     return (bool) $deleted;
   }
 
@@ -97,9 +122,10 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function getAssignedToUser($account) {
-    $query = db_select('grade_scale_users', 'ssu');
-    $query->fields('ssu', array('set_name'));
+    $query = $this->database->select('grade_scale_users', 'ssu');
+    $query->fields('ssu', ['set_name']);
     $query->condition('ssu.uid', $account->id());
+
     return $query->execute()->fetchField();
   }
 
@@ -107,7 +133,8 @@ class GradeScaleStorage extends ConfigEntityStorage implements GradeScaleStorage
    * {@inheritdoc}
    */
   public function countAssignedUsers(GradeScaleInterface $grade_scale) {
-    return db_query('SELECT COUNT(*) FROM {grade_scale_users} WHERE set_name = :name', array(':name' => $grade_scale->id()))->fetchField();
+    return $this->database->query('SELECT COUNT(*) FROM {grade_scale_users} WHERE set_name = :name', [':name' => $grade_scale->id()])
+      ->fetchField();
   }
 
   /**

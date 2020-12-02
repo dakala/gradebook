@@ -26,7 +26,9 @@ class GradeLetterController extends ControllerBase {
    *   The grade letter add form.
    */
   public function addForm(GradeLetterSetInterface $grade_letter_set) {
-    $grade_letter = $this->entityManager()->getStorage('grade_letter')->create(array('grade_letter_set' => $grade_letter_set->id()));
+    $grade_letter = $this->entityTypeManager()
+      ->getStorage('grade_letter')
+      ->create(['grade_letter_set' => $grade_letter_set->id()]);
     return $this->entityFormBuilder()->getForm($grade_letter, 'add');
   }
 
@@ -40,6 +42,7 @@ class GradeLetterController extends ControllerBase {
    *   The page title.
    */
   public function pageTitle(GradeLetterSetInterface $grade_letter_set) {
-    return $this->t('Grade letters: @set', array('@set' => $grade_letter_set->label()));
+    return $this->t('Grade letters: @set', ['@set' => $grade_letter_set->label()]);
   }
+
 }

@@ -10,6 +10,7 @@ namespace Drupal\gradebook\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
 
 /**
  * Builds the grade letter set list form.
@@ -30,68 +31,78 @@ class GradeLetterSetListForm extends EntityForm {
     $account = \Drupal::currentUser();
 
     $form = parent::form($form, $form_state);
-    $form['grade_letter_sets'] = array(
+    $form['grade_letter_sets'] = [
       '#tree' => TRUE,
       '#weight' => -20,
-    );
+    ];
 
-    $form['grade_letter_sets']['letters'] = array(
+    $form['grade_letter_sets']['letters'] = [
       '#type' => 'table',
-      '#header' => array(t('Name'), t('Description'), t('Lowest'), t('Highest'), t('Weight'), t('Operations')),
-      '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', array(':grade-letter' => $this->url('grade_letter.letter_add', array('grade_letter_set' => $this->entity->id())))),
-      '#attributes' => array('id' => 'grade_letter_sets'),
-      '#tabledrag' => array(
-        array(
+      '#header' => [
+        t('Name'),
+        t('Description'),
+        t('Lowest'),
+        t('Highest'),
+        t('Weight'),
+        t('Operations'),
+      ],
+      '#empty' => $this->t('No grade letters available. <a href=":grade-letter">Add a grade letter</a>', [
+        ':grade-letter' => Url::fromRoute('grade_letter.letter_add', ['grade_letter_set' => $this->entity->id()])
+          ->toString(),
+      ]),
+      '#attributes' => ['id' => 'grade_letter_sets'],
+      '#tabledrag' => [
+        [
           'action' => 'order',
           'relationship' => 'sibling',
           'group' => 'grade-letter-weight',
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     foreach ($this->entity->getGradeLetters() as $grade_letter) {
       $id = $grade_letter->id();
 
       $form['grade_letter_sets']['letters'][$id]['#attributes']['class'][] = 'draggable';
-      $form['grade_letter_sets']['letters'][$id]['name'] = array(
+      $form['grade_letter_sets']['letters'][$id]['name'] = [
         '#type' => 'markup',
         '#markup' => $grade_letter->getTitle(),
-      );
-      $form['grade_letter_sets']['letters'][$id]['description'] = array(
+      ];
+      $form['grade_letter_sets']['letters'][$id]['description'] = [
         '#type' => 'markup',
         '#markup' => $grade_letter->getDescription(),
-      );
-      $form['grade_letter_sets']['letters'][$id]['lowest'] = array(
+      ];
+      $form['grade_letter_sets']['letters'][$id]['lowest'] = [
         '#type' => 'markup',
         '#markup' => $grade_letter->getLowest() . '%',
-      );
-      $form['grade_letter_sets']['letters'][$id]['highest'] = array(
+      ];
+      $form['grade_letter_sets']['letters'][$id]['highest'] = [
         '#type' => 'markup',
         '#markup' => $grade_letter->getHighest() . '%',
-      );
+      ];
       unset($form['grade_letter_sets']['letters'][$id]['name']['#access_callback']);
       $form['grade_letter_sets']['letters'][$id]['#weight'] = $grade_letter->getWeight();
-      $form['grade_letter_sets']['letters'][$id]['weight'] = array(
+      $form['grade_letter_sets']['letters'][$id]['weight'] = [
         '#type' => 'weight',
-        '#title' => t('Weight for @title', array('@title' => $grade_letter->getTitle())),
+        '#title' => t('Weight for @title', ['@title' => $grade_letter->getTitle()]),
         '#title_display' => 'invisible',
         '#default_value' => $grade_letter->getWeight(),
-        '#attributes' => array('class' => array('grade-letter-weight')),
-      );
+        '#attributes' => ['class' => ['grade-letter-weight']],
+      ];
 
-      $links['edit'] = array(
+      $links['edit'] = [
         'title' => t('Edit'),
         'url' => $grade_letter->toUrl(),
-      );
-      $links['delete'] = array(
+      ];
+      $links['delete'] = [
         'title' => t('Delete'),
         'url' => $grade_letter->toUrl('delete-form'),
-      );
-      $form['grade_letter_sets']['letters'][$id]['operations'] = array(
+      ];
+      $form['grade_letter_sets']['letters'][$id]['operations'] = [
         '#type' => 'operations',
         '#links' => $links,
         '#access' => $account->hasPermission('administer grade letters'),
-      );
+      ];
     }
     return $form;
   }
@@ -100,14 +111,14 @@ class GradeLetterSetListForm extends EntityForm {
    * {@inheritdoc}
    */
   protected function actions(array $form, FormStateInterface $form_state) {
-    return array(
-      'submit' => array(
+    return [
+      'submit' => [
         '#type' => 'submit',
         '#value' => t('Save changes'),
         '#access' => (bool) Element::getVisibleChildren($form['grade_letter_sets']['letters']),
-        '#submit' => array('::submitForm', '::save'),
-      ),
-    );
+        '#submit' => ['::submitForm', '::save'],
+      ],
+    ];
   }
 
   /**
@@ -115,7 +126,12 @@ class GradeLetterSetListForm extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     foreach ($this->entity->getGradeLetters() as $grade_letter) {
-      $weight = $form_state->getValue(array('grade_letter_sets', 'letters', $grade_letter->id(), 'weight'));
+      $weight = $form_state->getValue([
+        'grade_letter_sets',
+        'letters',
+        $grade_letter->id(),
+        'weight',
+      ]);
       $grade_letter->setWeight($weight);
       $grade_letter->save();
     }

@@ -7,12 +7,11 @@
 
 namespace Drupal\gradebook\Entity;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\gradebook\GradeCategoryInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -52,6 +51,8 @@ use Drupal\user\UserInterface;
  * )
  */
 class GradeCategory extends ContentEntityBase implements GradeCategoryInterface {
+
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -355,7 +356,7 @@ class GradeCategory extends ContentEntityBase implements GradeCategoryInterface 
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'above',

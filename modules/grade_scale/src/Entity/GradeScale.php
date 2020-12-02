@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\grade_scale\GradeScaleInterface;
 use Drupal\user\UserInterface;
+use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the grade scale entity class.
@@ -51,6 +52,8 @@ use Drupal\user\UserInterface;
  * )
  */
 class GradeScale extends ContentEntityBase implements GradeScaleInterface {
+
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -192,7 +195,7 @@ class GradeScale extends ContentEntityBase implements GradeScaleInterface {
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'hidden',

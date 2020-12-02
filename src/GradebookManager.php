@@ -34,7 +34,7 @@ class GradebookManager implements GradebookManagerInterface {
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityManager;
+  protected $entityTypeManager;
 
   /**
    * Database connection
@@ -48,16 +48,16 @@ class GradebookManager implements GradebookManagerInterface {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager service.
    * @param \Drupal\Core\Database\Connection $connection
    *   The current database connection.
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The translation manager service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_manager, Connection $connection, TranslationInterface $string_translation) {
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, Connection $connection, TranslationInterface $string_translation) {
     $this->configFactory = $config_factory;
-    $this->entityManager = $entity_manager; // @todo:
+    $this->entityTypeManager = $entity_type_manager; // @todo:
     $this->connection = $connection;
     $this->stringTranslation = $string_translation;
   }

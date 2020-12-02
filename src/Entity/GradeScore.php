@@ -7,12 +7,12 @@
 
 namespace Drupal\gradebook\Entity;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\gradebook\GradeScoreInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -52,6 +52,8 @@ use Drupal\user\UserInterface;
  * )
  */
 class GradeScore extends ContentEntityBase implements GradeScoreInterface {
+
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -197,7 +199,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
     $this->set('weight', $weight);
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -257,7 +259,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
     $this->set('uid', $account->id());
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -303,7 +305,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDescription(t('The ID of the student who owns the score.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'above',
@@ -468,7 +470,7 @@ class GradeScore extends ContentEntityBase implements GradeScoreInterface {
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'hidden',

@@ -25,7 +25,7 @@ class GradeScaleViewController extends EntityViewController {
    *   The page title.
    */
   public function title(EntityInterface $grade_scale) {
-    return $this->entityManager->getTranslationFromContext($grade_scale)->label();
+    return \Drupal::service('entity.repository')->getTranslationFromContext($grade_scale)->label();
   }
 
 }

@@ -26,7 +26,7 @@ class GradeItemAccessControlHandler extends EntityAccessControlHandler {
     switch ($operation) {
       case 'view':
         if ($account->hasPermission('access grade items') && $account->isAuthenticated() && $account->id() == $entity->getOwnerId()) {
-          return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->cacheUntilEntityChanges($entity);
+          return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($entity);
         }
 
       case 'update':
@@ -36,7 +36,7 @@ class GradeItemAccessControlHandler extends EntityAccessControlHandler {
         if (!$account->hasPermission('access grade items')) {
           return AccessResult::neutral()->cachePerPermissions();
         }
-        return AccessResult::allowedIf($account->hasPermission('customize grade items') && $entity == grade_scale_current_displayed_set($account))->cachePerPermissions()->cacheUntilEntityChanges($entity);
+        return AccessResult::allowedIf($account->hasPermission('customize grade items') && $entity == grade_scale_current_displayed_set($account))->cachePerPermissions()->addCacheableDependency($entity);
 
       case 'delete':
         return AccessResult::allowedIf($account->hasPermission('administer grade items') && $entity->id() != 'default')->cachePerPermissions();

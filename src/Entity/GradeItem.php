@@ -7,12 +7,11 @@
 
 namespace Drupal\gradebook\Entity;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\gradebook\GradeItemInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -52,6 +51,8 @@ use Drupal\user\UserInterface;
  * )
  */
 class GradeItem extends ContentEntityBase implements GradeItemInterface {
+
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -163,7 +164,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
     $this->set('grade_item_data', $grade_item_data);
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -178,7 +179,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
     $this->set('multiplicator', $multiplicator);
     return $this;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -359,7 +360,7 @@ class GradeItem extends ContentEntityBase implements GradeItemInterface {
       ->setDescription(t('The username of the content author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
-      ->setDefaultValueCallback('Drupal\node\Entity\Node::getCurrentUserId')
+      ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', array(
         'label' => 'hidden',
